@@ -1,4 +1,4 @@
-package models;
+package ru.job4j.models;
 
 public class HRManager extends User {
     public HRManager(String lastName, String firstName, String middleName, String email, String number, int age) {
