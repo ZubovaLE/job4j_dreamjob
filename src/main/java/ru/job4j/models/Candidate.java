@@ -1,17 +1,21 @@
 package ru.job4j.models;
 
+import lombok.Getter;
+
+@Getter
 public class Candidate extends User {
-    public Candidate(CandidateBuilder builder) {
+    private Candidate(CandidateBuilder builder) {
         super(builder);
     }
 
-    public abstract static class CandidateBuilder extends AbstractUserBuilder {
+    public static class CandidateBuilder extends AbstractUserBuilder {
         public CandidateBuilder(String lastName, String firstName) {
+            super(lastName, firstName);
         }
-    }
 
-    @Override
-    User build() {
-        return null;
+        @Override
+        User build() {
+            return new Candidate(this);
+        }
     }
 }

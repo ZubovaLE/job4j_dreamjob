@@ -12,7 +12,7 @@ public abstract class User {
 
     private int age;
 
-    private User(AbstractUserBuilder userBuilder) {
+    public User(AbstractUserBuilder userBuilder) {
         lastName = userBuilder.lastName;
         firstName = userBuilder.firstName;
         middleName = userBuilder.middleName;
@@ -26,13 +26,18 @@ public abstract class User {
     }
 
     public abstract static class AbstractUserBuilder {
-        private String lastName;
-        private String firstName;
+        private final String lastName;
+        private final String firstName;
         private String middleName;
         private String email;
         private String phoneNumber;
 
         private int age;
+
+        public AbstractUserBuilder(String lastName, String firstName) {
+            this.lastName = lastName;
+            this.firstName = firstName;
+        }
 
         public AbstractUserBuilder withMiddleName(String middleName) {
             this.middleName = middleName;
@@ -49,11 +54,11 @@ public abstract class User {
             return this;
         }
 
-        public AbstractUserBuilder withNumber(int age) {
+        public AbstractUserBuilder withAge(int age) {
             this.age = age;
             return this;
         }
 
-        abstract User build(String lastName, String firstName);
+        abstract User build();
     }
 }

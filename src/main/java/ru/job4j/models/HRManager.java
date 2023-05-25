@@ -1,7 +1,21 @@
 package ru.job4j.models;
 
+import lombok.Getter;
+
+@Getter
 public class HRManager extends User {
-    public HRManager(String lastName, String firstName, String middleName, String email, String number, int age) {
-        super(lastName, firstName, middleName, email, number, age);
+    private HRManager(HRManagerBuilder builder) {
+        super(builder);
+    }
+
+    public static class HRManagerBuilder extends AbstractUserBuilder {
+        public HRManagerBuilder(String lastName, String firstName) {
+            super(lastName, firstName);
+        }
+
+        @Override
+        User build() {
+            return new HRManager(this);
+        }
     }
 }
