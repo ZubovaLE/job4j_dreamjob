@@ -9,10 +9,9 @@ public abstract class User {
     private final String middleName;
     private final String email;
     private final String phoneNumber;
-
     private int age;
 
-    public User(AbstractUserBuilder userBuilder) {
+    public User(final AbstractUserBuilder userBuilder) {
         lastName = userBuilder.lastName;
         firstName = userBuilder.firstName;
         middleName = userBuilder.middleName;
@@ -31,7 +30,6 @@ public abstract class User {
         private String middleName;
         private String email;
         private String phoneNumber;
-
         private int age;
 
         public AbstractUserBuilder(String lastName, String firstName) {
