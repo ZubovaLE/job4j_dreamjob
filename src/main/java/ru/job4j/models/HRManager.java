@@ -18,4 +18,9 @@ public class HRManager extends User {
             return new HRManager(this);
         }
     }
+
+    public static void main(String[] args) {
+        User manager = new HRManagerBuilder("l", "rr").withAge(21).build();
+        System.out.println(manager.getFirstName());
+    }
 }
