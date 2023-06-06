@@ -1,5 +1,6 @@
 package ru.job4j.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class Post {
     private int id;
     private String name;
@@ -17,13 +19,6 @@ public class Post {
     public Post(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Post(int id, String name, String description, LocalDate created) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.created = created;
     }
 
     @Override
