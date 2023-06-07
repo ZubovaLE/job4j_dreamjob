@@ -9,8 +9,8 @@ public class HRManager extends User {
     }
 
     public static class HRManagerBuilder extends AbstractUserBuilder {
-        public HRManagerBuilder(String lastName, String firstName) {
-            super(lastName, firstName);
+        public HRManagerBuilder(int id, String lastName, String firstName) {
+            super(id, lastName, firstName);
         }
 
         @Override

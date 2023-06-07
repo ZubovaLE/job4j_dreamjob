@@ -2,8 +2,11 @@ package ru.job4j.models;
 
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 public abstract class User {
+    private final int id;
     private final String lastName;
     private final String firstName;
     private final String middleName;
@@ -12,6 +15,7 @@ public abstract class User {
     private int age;
 
     public User(final AbstractUserBuilder userBuilder) {
+        id = userBuilder.id;
         lastName = userBuilder.lastName;
         firstName = userBuilder.firstName;
         middleName = userBuilder.middleName;
@@ -24,7 +28,21 @@ public abstract class User {
         this.age = age;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     public abstract static class AbstractUserBuilder {
+        private final int id;
         private final String lastName;
         private final String firstName;
         private String middleName;
@@ -32,7 +50,8 @@ public abstract class User {
         private String phoneNumber;
         private int age;
 
-        public AbstractUserBuilder(String lastName, String firstName) {
+        public AbstractUserBuilder(int id, String lastName, String firstName) {
+            this.id = id;
             this.lastName = lastName;
             this.firstName = firstName;
         }

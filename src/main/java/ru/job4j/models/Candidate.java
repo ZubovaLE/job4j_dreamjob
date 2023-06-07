@@ -7,7 +7,7 @@ public class Candidate extends User {
     private String photo;
     private final Gender gender;
 
-    private Candidate(CandidateBuilder builder) {
+    public Candidate(CandidateBuilder builder) {
         super(builder);
         photo = builder.photo;
         gender = builder.gender;
@@ -21,8 +21,8 @@ public class Candidate extends User {
         private String photo;
         private Gender gender;
 
-        public CandidateBuilder(String lastName, String firstName) {
-            super(lastName, firstName);
+        public CandidateBuilder(int id, String lastName, String firstName) {
+            super(id, lastName, firstName);
         }
 
         public CandidateBuilder withPhoto(String photo) {
@@ -36,7 +36,7 @@ public class Candidate extends User {
         }
 
         @Override
-        User build() {
+        public Candidate build() {
             return new Candidate(this);
         }
     }
