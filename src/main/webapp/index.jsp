@@ -1,7 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="ru.job4j.store.Store" %>
-<%@ page import="ru.job4j.models.Post" %>
 <!doctype html>
 <html lang="en">
 <head>
