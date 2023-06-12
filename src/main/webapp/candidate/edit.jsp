@@ -1,11 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Любовь
-  Date: 07.06.2023
---%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.store.Store" %>
-<%@ page import="ru.job4j.models.Candidate" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,33 +20,21 @@
             crossorigin="anonymous"></script>
 
     <title>Работа мечты</title>
-</head>
 <body>
 <div class="container pt-3">
-
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Кандидаты
+                Новый кандидат.
             </div>
             <div class="card-body">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Названия</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% for (Candidate can : Store.instOf().findAllCandidates()) { %>
-                    <tr>
-                        <td><%= can.getLastName() %>
-                        </td>
-                        <td><%= can.getFirstName() %>
-                        </td>
-                    </tr>
-                    <% } %>
-                    </tbody>
-                </table>
+                <form>
+                    <div class="form-group">
+                        <label>Имя</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </form>
             </div>
         </div>
     </div>
