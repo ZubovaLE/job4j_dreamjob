@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Getter
 public abstract class User {
-    private final int id;
+    private int id;
     private final String lastName;
     private final String firstName;
     private final String middleName;
@@ -26,6 +26,10 @@ public abstract class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -30,9 +30,13 @@
             <div class="card-body">
                 <form>
                     <div class="form-group">
-                        <label>Имя</label>
-                        <input type="text" class="form-control">
+                        <label>Фамилия</label>
+                        <input type="text" class="form-control" name="firstName">
                     </div>
+<%--                    <div class="form-group">--%>
+<%--                        <label>Имя</label>--%>
+<%--                        <input type="text" class="form-control" name="lastName">--%>
+<%--                    </div>--%>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
             </div>
