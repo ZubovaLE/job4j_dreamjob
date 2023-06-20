@@ -28,7 +28,7 @@
                 Новый кандидат.
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/candidate/save" method="candidate">
+                <form action="<%=request.getContextPath()%>/candidate/save" method="post">
                     <div class="form-group">
                         <label>Фамилия</label>
                         <input type="text" class="form-control" name="lastName">

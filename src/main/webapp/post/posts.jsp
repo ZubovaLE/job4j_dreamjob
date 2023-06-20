@@ -6,6 +6,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="ru.job4j.store.Store" %>
 <%@ page import="ru.job4j.models.Post" %>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Работа мечты</title>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -43,9 +47,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Post post : Store.instOf().findAll()) { %>
+                    <% for (Post post : Store.instOf().findAllPosts()) { %>
                     <tr>
-                        <td><%= post.getName() %>
+                        <td>
+                            <a href="<%=request.getContextPath()%>/post/edit.jsp?id=<%=post.getId()%>">
+                                <i class="fa fa-edit mr-3"></i>
+                            </a>
+                            <%=post.getName()%>
                         </td>
                     </tr>
                     <% } %>
