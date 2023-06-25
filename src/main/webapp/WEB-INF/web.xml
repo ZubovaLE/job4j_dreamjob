@@ -34,4 +34,12 @@
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/index.do</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CandidatesServlet</servlet-name>
+        <servlet-class>ru.job4j.servlet.CandidatesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CandidatesServlet</servlet-name>
+        <url-pattern>/candidates.do</url-pattern>
+    </servlet-mapping>
 </web-app>
