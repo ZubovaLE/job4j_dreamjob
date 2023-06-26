@@ -26,6 +26,6 @@ public class PostServlet extends HttpServlet {
                         req.getParameter("name")
                 )
         );
-        resp.sendRedirect(req.getContextPath() + "/posts.do");
+        resp.sendRedirect(req.getContextPath() + "/post/posts.do");
     }
 }

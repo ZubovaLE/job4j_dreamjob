@@ -19,12 +19,8 @@
         <servlet-class>ru.job4j.servlet.CandidateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>PostServlet</servlet-name>
-        <url-pattern>/post/save</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>CandidateServlet</servlet-name>
-        <url-pattern>/candidate/save</url-pattern>
+        <url-pattern>/candidates.do</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>IndexServlet</servlet-name>
@@ -33,13 +29,5 @@
     <servlet-mapping>
         <servlet-name>IndexServlet</servlet-name>
         <url-pattern>/index.do</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>CandidatesServlet</servlet-name>
-        <servlet-class>ru.job4j.servlet.CandidatesServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CandidatesServlet</servlet-name>
-        <url-pattern>/candidates.do</url-pattern>
     </servlet-mapping>
 </web-app>
