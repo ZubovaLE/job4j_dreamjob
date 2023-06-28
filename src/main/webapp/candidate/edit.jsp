@@ -1,3 +1,5 @@
+<%@ page import="ru.job4j.models.Candidate" %>
+<%@ page import="ru.job4j.store.Store" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -28,8 +30,7 @@
                 Новый кандидат.
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/candidates.do?\ method=" post
-                ">
+                <form action="<%=request.getContextPath()%>/candidates.do?lastName=<%=%>" method="post">
                 <div class="form-group">
                     <label>Фамилия</label>
                     <input type="text" class="form-control" name="lastName">
