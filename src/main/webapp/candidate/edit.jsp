@@ -23,6 +23,13 @@
 
     <title>Работа мечты</title>
 <body>
+<%
+    String id = request.getParameter("id");
+    Candidate candidate = new Candidate.CandidateBuilder(0, "", "").build();
+    if (id != null) {
+        candidate = Store.instOf().findCandidateById(Integer.parseInt(id));
+    }
+%>
 <div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
@@ -30,14 +37,14 @@
                 Новый кандидат.
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/candidates.do?lastName=<%=%>" method="post">
-                <div class="form-group">
-                    <label>Фамилия</label>
-                    <input type="text" class="form-control" name="lastName">
-                    <label>Имя</label>
-                    <input type="text" class="form-control" name="firstName">
-                </div>
-                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
+                    <div class="form-group">
+                        <label>Фамилия</label>
+                        <input type="text" class="form-control" name="lastName" value="<%=candidate.getLastName()%>">
+                        <label>Имя</label>
+                        <input type="text" class="form-control" name="firstName" value="<%=candidate.getFirstName()%>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
             </div>
         </div>
