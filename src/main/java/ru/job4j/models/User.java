@@ -45,6 +45,19 @@ public abstract class User {
         return Objects.hash(id);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
     public abstract static class AbstractUserBuilder {
         private final int id;
         private final String lastName;

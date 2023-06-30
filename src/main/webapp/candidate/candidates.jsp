@@ -52,18 +52,16 @@
                                 <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
-                                <c:out value="${candidate.name}"/>
+                                <c:out value="${candidate.lastName}"/>
+                            </td>
+                            <td>
+                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
+                                    <i class="fa fa-edit mr-3"></i>
+                                </a>
+                                <c:out value="${candidate.firstName}"/>
                             </td>
                         </tr>
                     </c:forEach>
-                    <% for (Candidate can : Store.instOf().findAllCandidates()) { %>
-                    <tr>
-                        <td><%= can.getLastName() %>
-                        </td>
-                        <td><%= can.getFirstName() %>
-                        </td>
-                    </tr>
-                    <% } %>
                     </tbody>
                 </table>
             </div>
