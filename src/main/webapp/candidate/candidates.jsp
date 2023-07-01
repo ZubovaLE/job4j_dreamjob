@@ -42,11 +42,12 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Названия</th>
+                        <th scope="col">Фамилия</th>
+                        <th scope="col">Имя</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="candidates" var="candidate">
+                    <c:forEach items="${candidates}" var="candidate">
                         <tr>
                             <td>
                                 <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
