@@ -50,7 +50,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${post/posts}" var="post">
+                    <c:forEach items="${posts}" var="post">
                         <tr>
                             <td>
                                 <a href='<c:url value="/post/edit.jsp?id=${post.id}"/>'>
