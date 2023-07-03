@@ -50,16 +50,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${posts}" var="post">
-                        <tr>
-                            <td>
-                                <a href='<c:url value="/post/edit.jsp?id=${post.id}"/>'>
-                                    <i class="fa fa-edit mr-3"></i>
-                                </a>
-                                <c:out value="${post.name}"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                    <% for (Post post : Store.instOf().findAll()) { %>
+                    <tr>
+                        <td><%= post.getName() %></td>
+                    </tr>
+                    <% } %>
                     </tbody>
                 </table>
             </div>
