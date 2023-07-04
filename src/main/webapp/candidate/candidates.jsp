@@ -6,7 +6,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.store.Store" %>
 <%@ page import="ru.job4j.models.Candidate" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+
 <!doctype html>
 <html lang="en">
 <head>
