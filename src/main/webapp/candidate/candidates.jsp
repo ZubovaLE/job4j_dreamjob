@@ -4,9 +4,7 @@
   Date: 07.06.2023
 --%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.store.Store" %>
-<%@ page import="ru.job4j.models.Candidate" %>
-<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 
 <!doctype html>
 <html lang="en">
@@ -57,9 +55,6 @@
                                 <c:out value="${candidate.lastName}"/>
                             </td>
                             <td>
-                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
-                                    <i class="fa fa-edit mr-3"></i>
-                                </a>
                                 <c:out value="${candidate.firstName}"/>
                             </td>
                         </tr>
