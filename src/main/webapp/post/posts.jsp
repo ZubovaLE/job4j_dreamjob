@@ -4,7 +4,7 @@
   Date: 06.06.2023
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 
 <!doctype html>
 <html lang="en">
@@ -61,4 +61,11 @@
     </div>
 </div>
 </body>
+<footer>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a href="<%=request.getContextPath()%>">На главную страницу</a>
+        </li>
+    </ul>
+</footer>
 </html>
