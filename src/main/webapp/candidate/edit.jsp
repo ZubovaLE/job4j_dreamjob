@@ -55,4 +55,11 @@
     </div>
 </div>
 </body>
+<footer>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a href="<%=request.getContextPath()%>">На главную страницу</a>
+        </li>
+    </ul>
+</footer>
 </html>
