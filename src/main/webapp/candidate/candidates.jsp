@@ -42,6 +42,7 @@
                     <tr>
                         <th scope="col">Фамилия</th>
                         <th scope="col">Имя</th>
+                        <th scope="col">Пол</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -55,6 +56,9 @@
                             </td>
                             <td>
                                 <c:out value="${candidate.firstName}"/>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.gender}"/>
                             </td>
                         </tr>
                     </c:forEach>

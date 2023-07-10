@@ -49,8 +49,8 @@
                         <label>Имя</label>
                         <input type="text" class="form-control" name="firstName" value="<%=candidate.getFirstName()%>">
                         <label>Пол</label><br>
-                        <input type="radio" name="gender" value="male">Мужской<br>
-                        <input type="radio" name="gender" value="female">Женский<br>
+                        <input type="radio" name="gender" value="MALE">Мужской<br>
+                        <input type="radio" name="gender" value="FEMALE">Женский<br>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
