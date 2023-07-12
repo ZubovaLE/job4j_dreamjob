@@ -1,6 +1,6 @@
 <%@ page import="ru.job4j.models.Candidate" %>
 <%@ page import="ru.job4j.models.Gender" %>
-<%@ page import="ru.job4j.store.Store" %>
+<%@ page import="ru.job4j.store.MemStore" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -28,7 +28,7 @@
     String id = request.getParameter("id");
     Candidate candidate = new Candidate.CandidateBuilder(0, "", "").build();
     if (id != null) {
-        candidate = Store.instOf().findCandidateById(Integer.parseInt(id));
+        candidate = MemStore.instOf().findCandidateById(Integer.parseInt(id));
     }
 %>
 <div class="container pt-3">
