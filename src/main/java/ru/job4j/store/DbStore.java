@@ -91,6 +91,14 @@ public class DbStore implements Store {
         }
     }
 
+    public void save(Candidate candidate) {
+        if (candidate.getId() == 0) {
+            create(candidate);
+        } else {
+            update(candidate);
+        }
+    }
+
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
@@ -109,8 +117,47 @@ public class DbStore implements Store {
         return post;
     }
 
-    private void update(Post post) {
+    private Candidate create(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName) VALUES (?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, candidate.getLastName());
+            ps.setString(2, candidate.getFirstName());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    candidate.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return candidate;
+    }
 
+    private void update(Post post) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?")
+        ) {
+            ps.setString(1, post.getName());
+            ps.setInt(2, post.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void update(Candidate candidate) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("UPDATE candidates SET lastName = ?, firstName = ? " +
+                     "WHERE id = ?")
+        ) {
+            ps.setString(1, candidate.getLastName());
+            ps.setString(2, candidate.getFirstName());
+            ps.setInt(3, candidate.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Post findById(int id) {
