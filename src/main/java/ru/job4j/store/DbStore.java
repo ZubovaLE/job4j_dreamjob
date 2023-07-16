@@ -142,6 +142,7 @@ public class DbStore implements Store {
         ) {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
+            ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,12 +156,13 @@ public class DbStore implements Store {
             ps.setString(1, candidate.getLastName());
             ps.setString(2, candidate.getFirstName());
             ps.setInt(3, candidate.getId());
+            ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Post findById(int id) {
+    public Post findPostById(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id = ?")
         ) {
