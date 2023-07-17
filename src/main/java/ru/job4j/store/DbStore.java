@@ -6,9 +6,7 @@ import ru.job4j.models.Post;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.*;
 
 public class DbStore implements Store {
@@ -16,6 +14,11 @@ public class DbStore implements Store {
     private static final DbStore instance = new DbStore();
 
     private final BasicDataSource pool = new BasicDataSource();
+
+    private volatile boolean tableExists = false;
+
+    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS candidates(id SERIAL PRIMARY KEY, " +
+            "lastName TEXT, firstName TEXT);";
 
     private DbStore() {
         Properties cfg = new Properties();
@@ -118,10 +121,10 @@ public class DbStore implements Store {
     }
 
     private Candidate create(Candidate candidate) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName) VALUES (?, ?)",
-                     PreparedStatement.RETURN_GENERATED_KEYS)
-        ) {
+        try (Connection cn = pool.getConnection()) {
+            checkCandidatesTable(cn);
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName) VALUES (?, ?)",
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, candidate.getLastName());
             ps.setString(2, candidate.getFirstName());
             ps.execute();
@@ -137,9 +140,9 @@ public class DbStore implements Store {
     }
 
     private void update(Post post) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?")
-        ) {
+        try (Connection cn = pool.getConnection()) {
+            checkCandidatesTable(cn);
+            PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?");
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
             ps.execute();
@@ -176,5 +179,29 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private synchronized void checkCandidatesTable(Connection cn) {
+        if (!tableExists) {
+            try {
+                DatabaseMetaData metaData = cn.getMetaData();
+                ResultSet resultSet = metaData.getTables(null, null, "candidates",
+                        new String[]{"TABLES"});
+                tableExists = resultSet.next();
+                if (!tableExists) {
+                    createCandidatesTable(cn);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void createCandidatesTable(Connection cn) {
+        try (Statement statement = cn.createStatement()) {
+            statement.executeUpdate(CREATE_TABLE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
