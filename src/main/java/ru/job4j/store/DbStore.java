@@ -140,9 +140,8 @@ public class DbStore implements Store {
     }
 
     private void update(Post post) {
-        try (Connection cn = pool.getConnection()) {
-            checkCandidatesTable(cn);
-            PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?");
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?")) {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
             ps.execute();
@@ -152,10 +151,10 @@ public class DbStore implements Store {
     }
 
     private void update(Candidate candidate) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE candidates SET lastName = ?, firstName = ? " +
-                     "WHERE id = ?")
-        ) {
+        try (Connection cn = pool.getConnection()) {
+            checkCandidatesTable(cn);
+            PreparedStatement ps = cn.prepareStatement("UPDATE candidates SET lastName = ?, firstName = ? " +
+                    "WHERE id = ?");
             ps.setString(1, candidate.getLastName());
             ps.setString(2, candidate.getFirstName());
             ps.setInt(3, candidate.getId());
@@ -173,6 +172,23 @@ public class DbStore implements Store {
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     return new Post(it.getInt("id"), it.getString("name"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Candidate findCandidateById(int id) {
+        try (Connection cn = pool.getConnection()) {
+            checkCandidatesTable(cn);
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates WHERE id = ?");
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new Candidate.CandidateBuilder(it.getInt("id"), it.getString("lastName"),
+                            it.getString("firstName")).build();
                 }
             }
         } catch (Exception e) {

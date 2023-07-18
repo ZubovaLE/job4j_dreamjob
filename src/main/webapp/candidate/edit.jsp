@@ -1,6 +1,5 @@
 <%@ page import="ru.job4j.models.Candidate" %>
-<%@ page import="ru.job4j.models.Gender" %>
-<%@ page import="ru.job4j.store.MemStore" %>
+<%@ page import="ru.job4j.store.DbStore" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -28,7 +27,7 @@
     String id = request.getParameter("id");
     Candidate candidate = new Candidate.CandidateBuilder(0, "", "").build();
     if (id != null) {
-        candidate = MemStore.instOf().findCandidateById(Integer.parseInt(id));
+        candidate = DbStore.instOf().findCandidateById(Integer.parseInt(id));
     }
 %>
 <div class="container pt-3">
@@ -46,11 +45,14 @@
                     <div class="form-group">
                         <label>Фамилия</label>
                         <input type="text" class="form-control" name="lastName" value="<%=candidate.getLastName()%>">
-                        <label>Имя</label>
-                        <input type="text" class="form-control" name="firstName" value="<%=candidate.getFirstName()%>">
-                        <label>Пол</label><br>
-                        <input type="radio" name="gender" value="MALE">Мужской<br>
-                        <input type="radio" name="gender" value="FEMALE">Женский<br>
+                        <label>Имя</label><br>
+                        <p>
+                            <input type="text" class="form-control" name="firstName"
+                                   value="<%=candidate.getFirstName()%>">
+                            <label>Пол</label><br>
+                            <input type="radio" name="gender" value="MALE">Мужской<br>
+                            <input type="radio" name="gender" value="FEMALE">Женский<br>
+                        </p>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
