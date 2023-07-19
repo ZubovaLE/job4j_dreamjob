@@ -21,8 +21,12 @@ public class CandidateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        DbStore.instOf().save(new Candidate.CandidateBuilder(0, req.getParameter("lastName"),
-                req.getParameter("firstName")).withGender(Gender.valueOf(req.getParameter("gender"))).build());
+        DbStore.instOf().save(
+                new Candidate.CandidateBuilder(
+                        Integer.parseInt(req.getParameter("id")),
+                        req.getParameter("lastName"),
+                        req.getParameter("firstName")
+                ).withGender(Gender.valueOf(req.getParameter("gender"))).build());
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

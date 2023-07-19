@@ -1,5 +1,6 @@
 <%@ page import="ru.job4j.models.Candidate" %>
 <%@ page import="ru.job4j.store.DbStore" %>
+<%@ page import="ru.job4j.models.Gender" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -46,13 +47,11 @@
                         <label>Фамилия</label>
                         <input type="text" class="form-control" name="lastName" value="<%=candidate.getLastName()%>">
                         <label>Имя</label><br>
-                        <p>
-                            <input type="text" class="form-control" name="firstName"
-                                   value="<%=candidate.getFirstName()%>">
-                            <label>Пол</label><br>
-                            <input type="radio" name="gender" value="MALE">Мужской<br>
-                            <input type="radio" name="gender" value="FEMALE">Женский<br>
-                        </p>
+                        <input type="text" class="form-control" name="firstName"
+                               value="<%=candidate.getFirstName()%>"><br>
+                        <label>Пол</label><br>
+                        <input type="radio" name="gender" value="<%=Gender.MALE%>" checked>Мужской<br>
+                        <input type="radio" name="gender" value="<%=Gender.FEMALE%>">Женский<br>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
