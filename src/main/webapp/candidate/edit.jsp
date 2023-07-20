@@ -50,8 +50,8 @@
                         <input type="text" class="form-control" name="firstName"
                                value="<%=candidate.getFirstName()%>"><br>
                         <label>Пол</label><br>
-                        <input type="radio" name="gender" value="<%=Gender.MALE%>" checked>Мужской<br>
-                        <input type="radio" name="gender" value="<%=Gender.FEMALE%>">Женский<br>
+                        <input type="radio" name="gender" value="MALE" checked>Мужской<br>
+                        <input type="radio" name="gender" value="FEMALE">Женский<br>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

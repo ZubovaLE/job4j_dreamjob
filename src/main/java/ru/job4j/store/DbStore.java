@@ -2,6 +2,7 @@ package ru.job4j.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import ru.job4j.models.Candidate;
+import ru.job4j.models.Gender;
 import ru.job4j.models.Post;
 
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ public class DbStore implements Store {
     private volatile boolean tableExists = false;
 
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS candidates(id SERIAL PRIMARY KEY, " +
-            "lastName TEXT, firstName TEXT);";
+            "lastName TEXT, firstName TEXT, gender TEXT);";
 
     private DbStore() {
         Properties cfg = new Properties();
@@ -123,10 +124,12 @@ public class DbStore implements Store {
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection()) {
             checkCandidatesTable(cn);
-            PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName) VALUES (?, ?)",
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName, gender) " +
+                            "VALUES (?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, candidate.getLastName());
             ps.setString(2, candidate.getFirstName());
+            ps.setString(3, candidate.getGender().toString());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -188,7 +191,9 @@ public class DbStore implements Store {
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     return new Candidate.CandidateBuilder(it.getInt("id"), it.getString("lastName"),
-                            it.getString("firstName")).build();
+                            it.getString("firstName"))
+                            .withGender(Gender.valueOf(it.getString("gender")))
+                            .build();
                 }
             }
         } catch (Exception e) {
