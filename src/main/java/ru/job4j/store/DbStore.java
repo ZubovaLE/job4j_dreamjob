@@ -78,7 +78,8 @@ public class DbStore implements Store {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
                     candidates.add(new Candidate.CandidateBuilder(it.getInt("id"),
-                            it.getString("lastName"), it.getString("firstName")).build());
+                            it.getString("lastName"), it.getString("firstName"))
+                            .withGender(Gender.valueOf(it.getString("gender"))).build());
                 }
             }
         } catch (Exception e) {

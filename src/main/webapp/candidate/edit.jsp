@@ -49,9 +49,15 @@
                         <label>Имя</label><br>
                         <input type="text" class="form-control" name="firstName"
                                value="<%=candidate.getFirstName()%>"><br>
+                        <% if (candidate.getGender() == null) { %>
                         <label>Пол</label><br>
-                        <input type="radio" name="gender" value="MALE" checked>Мужской<br>
+                        <input type="radio" name="gender" value="MALE">Мужской<br>
                         <input type="radio" name="gender" value="FEMALE">Женский<br>
+                        <% } else {%>
+                        <label>Пол</label><br>
+                        <input type="radio" name="gender" value="<%=candidate.getGender().toString()%>" checked>
+                        <%=candidate.getGender().toString()%><br>
+                        <% } %>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
