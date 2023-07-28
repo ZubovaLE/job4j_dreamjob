@@ -5,7 +5,7 @@
   Time: 23:40
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <html>
 <head>
     <title>Upload</title>
@@ -26,12 +26,12 @@
         </thead>
         <tbody>
         <c:forEach items="${images}" var="image" varStatus="status">
-        <tr valign="top">
-            <td>
-                <a href="<c:url value='/download?name=${image}'/>">Download</a>
-            </td>
-            <td>
-                <img src="<c:url value='/download?name=${image}'" width="100px" height="100px"/>
+            <tr valign="top">
+                <td>
+                    <a href="<c:url value='/download?name=${image}'/>">Download</a>
+                </td>
+                <td>
+                    <img src="<c:url value='/download?name=${image}'/>" width="100px" height="100px"/>
                 </td>
             </tr>
         </c:forEach>
@@ -39,11 +39,11 @@
     </table>
     <h2>Upload image</h2>
     <form action="<c:url value='/upload'/>" method="post" enctype="multipart/form-data">
-                <div class="checkbox">
-                    <input type="file" name="file">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-                </form>
+        <div class="checkbox">
+            <input type="file" name="file">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
 </div>
 </body>
 </html>
