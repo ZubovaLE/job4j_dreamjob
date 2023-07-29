@@ -43,6 +43,7 @@
                         <th scope="col">Фамилия</th>
                         <th scope="col">Имя</th>
                         <th scope="col">Пол</th>
+                        <th scope="col">Фото</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,14 @@
                             </td>
                             <td>
                                 <c:out value="${candidate.gender}"/>
+                            </td>
+                            <td>
+                                <form action="<%=request.getContextPath()%>/photoUpload%>" method="post">
+                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                </form>
+                                <form action="<%=request.getContextPath()%>/photoUpload%>" method="post">
+                                    <button type="submit" class="btn btn-primary">Удалить</button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

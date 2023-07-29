@@ -46,4 +46,12 @@
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PhotoUploadServlet</servlet-name>
+        <servlet-class>ru.job4j.servlet.PhotoUploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PhotoUploadServlet</servlet-name>
+        <url-pattern>/photoUpload</url-pattern>
+    </servlet-mapping>
 </web-app>
