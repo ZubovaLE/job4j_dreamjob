@@ -62,11 +62,11 @@
                                 <c:out value="${candidate.gender}"/>
                             </td>
                             <td>
-                                <form action="<%=request.getContextPath()%>/photoUpload%>" method="post">
-                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                <form action="<%=request.getContextPath()%>/download>" method="get">
+                                    <button type="submit" class="btn btn-primary">Добавить фото</button>
                                 </form>
-                                <form action="<%=request.getContextPath()%>/photoUpload%>" method="post">
-                                    <button type="submit" class="btn btn-primary">Удалить</button>
+                                <form action="<%=request.getContextPath()%>/download>" method="get">
+                                    <button type="submit" class="btn btn-primary">Удалить фото</button>
                                 </form>
                             </td>
                         </tr>
