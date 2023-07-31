@@ -1,8 +1,5 @@
 package ru.job4j.servlet;
 
-import ru.job4j.models.Post;
-import ru.job4j.store.DbStore;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
