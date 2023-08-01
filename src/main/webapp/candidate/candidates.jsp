@@ -62,12 +62,10 @@
                                 <c:out value="${candidate.gender}"/>
                             </td>
                             <td>
-                                <form action="<%=request.getContextPath()%>/download?name=${candidate.firstName}"
-                                      method="get" enctype="multipart/form-data">
+                                <form action="<c:url value='/photoUpload'/>" method="get" enctype="multipart/form-data">
                                     <button type="submit" class="btn btn-primary">Добавить</button>
                                 </form>
-                                <form action="<%=request.getContextPath()%>/download?name=${candidate.firstName}"
-                                      method="get">
+                                <form action="<c:url value='/photoUpload'/>" method="get">
                                     <button type="submit" class="btn btn-primary">Удалить</button>
                                 </form>
                             </td>
