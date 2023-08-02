@@ -63,9 +63,19 @@
                             </td>
                             <td>
                                 <form action="<c:url value='/photoUpload'/>" method="get" enctype="multipart/form-data">
+                                    <input type="hidden" class="form-control" name="id"
+                                           value="<c:out value="${candidate.id}"/>">
                                     <button type="submit" class="btn btn-primary">Добавить</button>
                                 </form>
-                                <form action="<c:url value='/photoUpload'/>" method="get">
+                                <form action="<c:url value='/photoUpload'/>" method="post">
+                                    <input type="hidden" class="form-control" name="id"
+                                           value="<c:out value="${candidate.id}"/>">
+                                    <input type="hidden" class="form-control" name="lastName"
+                                           value="<c:out value="${candidate.lastName}"/>">
+                                    <input type="hidden" class="form-control" name="firstName"
+                                           value="<c:out value="${candidate.firstName}"/>">
+                                    <input type="hidden" class="form-control" name="photo"
+                                           value="<c:out value="${candidate.photo}"/>">
                                     <button type="submit" class="btn btn-primary">Удалить</button>
                                 </form>
                             </td>
