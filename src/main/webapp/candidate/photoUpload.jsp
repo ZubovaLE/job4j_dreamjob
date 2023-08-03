@@ -13,7 +13,7 @@
 </head>
 <body>
 <h2>Upload Photo</h2>
-<form action="<c:url value='/photoUpload?id=${id}'/>" method="post" enctype="multipart/form-data">
+<form action="<c:url value='/photoUpload?id=<%=request.getParameter("id")%>'/>" method="post">
     <div class="checkbox">
         <input type="file" name="file">
     </div>

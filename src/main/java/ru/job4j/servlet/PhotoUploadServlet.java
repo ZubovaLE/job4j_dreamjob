@@ -21,8 +21,8 @@ import java.util.List;
 public class PhotoUploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
         req.setCharacterEncoding("UTF-8");
+        String id = req.getParameter("id");
         req.setAttribute("id", id);
         RequestDispatcher dispatcher = req.getRequestDispatcher("candidate/photoUpload.jsp");
         dispatcher.forward(req, resp);
@@ -32,7 +32,6 @@ public class PhotoUploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         String photo = req.getParameter("photo");
-
         if (photo != null) {
             String lastName = req.getParameter("lastName");
             Candidate candidate = new Candidate.CandidateBuilder(id, lastName, req.getParameter("firstName"))
