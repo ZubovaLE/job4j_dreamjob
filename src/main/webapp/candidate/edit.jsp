@@ -1,6 +1,5 @@
 <%@ page import="ru.job4j.models.Candidate" %>
 <%@ page import="ru.job4j.store.DbStore" %>
-<%@ page import="ru.job4j.models.Gender" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
