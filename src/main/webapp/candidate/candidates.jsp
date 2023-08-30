@@ -62,7 +62,7 @@
                                 <c:out value="${candidate.gender}"/>
                             </td>
                             <td>
-                                <form action="<c:url value='/photoUpload'/>" method="get" enctype="multipart/form-data">
+                                <form action="<c:url value='/upload'/>" method="get">
                                     <input type="hidden" class="form-control" name="id"
                                            value="<c:out value="${candidate.id}"/>">
                                     <button type="submit" class="btn btn-primary">Добавить</button>

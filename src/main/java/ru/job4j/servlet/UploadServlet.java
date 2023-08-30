@@ -4,6 +4,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.job4j.store.DbStore;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -26,8 +27,7 @@ public class UploadServlet extends HttpServlet {
             images.add(name.getName());
         }
         req.setAttribute("images", images);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/upload.jsp");
-        dispatcher.forward(req, resp);
+        req.getRequestDispatcher("upload.jsp").forward(req, resp);
     }
 
     @Override

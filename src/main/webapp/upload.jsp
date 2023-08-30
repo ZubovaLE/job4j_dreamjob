@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Professional
-  Date: 27.07.2023
-  Time: 23:40
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <html>
 <head>
