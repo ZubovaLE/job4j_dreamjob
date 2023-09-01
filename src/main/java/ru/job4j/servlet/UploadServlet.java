@@ -4,6 +4,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.job4j.models.Candidate;
+import ru.job4j.store.DbStore;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,16 +22,19 @@ import java.util.Objects;
 public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<String> images = new ArrayList<>();
-        for (File name : Objects.requireNonNull(new File("c:\\images\\").listFiles())) {
-            images.add(name.getName());
-        }
-        req.setAttribute("images", images);
+        String id = req.getParameter("id");
+        req.setAttribute("id", id);
         req.getRequestDispatcher("upload.jsp").forward(req, resp);
     }
+//    List<String> images = new ArrayList<>();
+//        for (File name : Objects.requireNonNull(new File("c:\\images\\").listFiles())) {
+//        images.add(name.getName());
+//    }
+//        req.setAttribute("images", images);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        int id = Integer.parseInt(req.getParameter("id"));
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
@@ -41,17 +46,27 @@ public class UploadServlet extends HttpServlet {
             if (!folder.exists()) {
                 folder.mkdir();
             }
+            StringBuilder sb;
             for (FileItem item : items) {
+                sb = new StringBuilder();
                 if (!item.isFormField()) {
-                    File file = new File(folder + File.separator + item.getName());
+                    sb.append(folder);
+                    sb.append(File.separator);
+                    sb.append("id");
+                    sb.append(".");
+                    sb.append(item.getName().split("\\.")[1]);
+                    File file = new File(sb.toString());
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }
+//                    Candidate candidate = (Candidate) DbStore.instOf().findCandidateById(id);
+//                    candidate.setPhoto(id + "." + item.getName().split("\\.")[1]);
+//                    DbStore.instOf().save(candidate);
                 }
             }
         } catch (FileUploadException e) {
             e.printStackTrace();
         }
-        req.getRequestDispatcher("candidates.jsp").forward(req, resp);
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 }

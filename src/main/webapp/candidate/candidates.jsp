@@ -67,7 +67,7 @@
                                            value="<c:out value="${candidate.id}"/>">
                                     <button type="submit" class="btn btn-primary">Добавить</button>
                                 </form>
-                                <form action="<c:url value='/photoUpload'/>" method="post">
+                                <form action="<c:url value='/upload'/>" method="post">
                                     <input type="hidden" class="form-control" name="id"
                                            value="<c:out value="${candidate.id}"/>">
                                     <input type="hidden" class="form-control" name="lastName"
