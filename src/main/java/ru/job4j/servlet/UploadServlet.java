@@ -15,9 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class UploadServlet extends HttpServlet {
     @Override
@@ -34,7 +32,7 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        int id = Integer.parseInt(req.getParameter("id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
@@ -52,16 +50,16 @@ public class UploadServlet extends HttpServlet {
                 if (!item.isFormField()) {
                     sb.append(folder);
                     sb.append(File.separator);
-                    sb.append("id");
+                    sb.append(id);
                     sb.append(".");
                     sb.append(item.getName().split("\\.")[1]);
                     File file = new File(sb.toString());
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }
-//                    Candidate candidate = (Candidate) DbStore.instOf().findCandidateById(id);
-//                    candidate.setPhoto(id + "." + item.getName().split("\\.")[1]);
-//                    DbStore.instOf().save(candidate);
+                    Candidate candidate = (Candidate) DbStore.instOf().findCandidateById(id);
+                    candidate.setPhoto(id + "." + item.getName().split("\\.")[1]);
+                    DbStore.instOf().save(candidate);
                 }
             }
         } catch (FileUploadException e) {
