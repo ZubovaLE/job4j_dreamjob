@@ -1,5 +1,3 @@
-<%@ page import="ru.job4j.models.Candidate" %>
-<%@ page import="ru.job4j.store.DbStore" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>

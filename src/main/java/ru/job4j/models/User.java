@@ -10,8 +10,9 @@ public abstract class User {
     private final String lastName;
     private final String firstName;
     private final String middleName;
-    private final String email;
+    private String email;
     private final String phoneNumber;
+    private String password;
     private int age;
 
     public User(final AbstractUserBuilder userBuilder) {
@@ -30,6 +31,10 @@ public abstract class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -56,6 +61,10 @@ public abstract class User {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public abstract static class AbstractUserBuilder {
