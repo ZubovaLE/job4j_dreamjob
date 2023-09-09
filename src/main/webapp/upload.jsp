@@ -16,11 +16,11 @@
 <body>
 <div class="container">
     <h2>Upload image</h2>
-    <form action='<c:url value="/upload"/>' method="post" enctype="multipart/form-data">
-        <div class="checkbox">
-            <input type="file" name="file">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+    <form action="<%=request.getContextPath()%>/posts.do?id=<%=request.getAttribute("id")%>" method="post"
+          enctype="multipart/form-data">
+        <input type="hidden" class="form-control" name="id" value="<%=request.getAttribute("id")%>">
+        <input type="file" name="file">
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 </body>
