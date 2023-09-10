@@ -3,7 +3,7 @@ package ru.job4j.models;
 import lombok.Getter;
 
 @Getter
-public class Candidate extends User {
+public class Candidate extends AbstractUser {
     private String photo;
     private final Gender gender;
 

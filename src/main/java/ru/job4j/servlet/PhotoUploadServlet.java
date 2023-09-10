@@ -27,7 +27,7 @@ public class PhotoUploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt((String) req.getAttribute("id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");

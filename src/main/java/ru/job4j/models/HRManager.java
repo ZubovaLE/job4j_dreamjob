@@ -3,7 +3,7 @@ package ru.job4j.models;
 import lombok.Getter;
 
 @Getter
-public class HRManager extends User {
+public class HRManager extends AbstractUser {
     private HRManager(HRManagerBuilder builder) {
         super(builder);
     }
@@ -14,7 +14,7 @@ public class HRManager extends User {
         }
 
         @Override
-        User build() {
+        AbstractUser build() {
             return new HRManager(this);
         }
     }
