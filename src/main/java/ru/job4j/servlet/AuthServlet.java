@@ -1,6 +1,6 @@
 package ru.job4j.servlet;
 
-import ru.job4j.models.Candidate;
+import ru.job4j.models.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +16,8 @@ public class AuthServlet extends HttpServlet {
         String password = req.getParameter("password");
         if ("root@local".equals(email) && "root".equals(password)) {
             HttpSession sc = req.getSession();
-            Candidate admin = new Candidate.CandidateBuilder(0, "", "Admin").build();
+            User admin = new User();
+            admin.setName("Admin");
             admin.setEmail(email);
             sc.setAttribute("user", admin);
             resp.sendRedirect(req.getContextPath() + "/posts.do");

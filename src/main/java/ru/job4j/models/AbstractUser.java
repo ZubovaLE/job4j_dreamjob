@@ -1,10 +1,12 @@
 package ru.job4j.models;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Getter
+@Setter
 public abstract class AbstractUser {
     private int id;
     private final String lastName;
@@ -23,18 +25,6 @@ public abstract class AbstractUser {
         email = userBuilder.email;
         phoneNumber = userBuilder.phoneNumber;
         age = userBuilder.age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override
