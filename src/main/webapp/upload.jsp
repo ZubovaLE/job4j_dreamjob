@@ -16,9 +16,8 @@
 <body>
 <div class="container">
     <h2>Upload image</h2>
-    <form action="<%=request.getContextPath()%>/posts.do?id=<%=request.getAttribute("id")%>" method="post"
+    <form action="<%=request.getContextPath()%>/candidates.do?id=<%=request.getAttribute("id")%>" method="get"
           enctype="multipart/form-data">
-        <input type="hidden" class="form-control" name="id" value="<%=request.getAttribute("id")%>">
         <input type="file" name="file">
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

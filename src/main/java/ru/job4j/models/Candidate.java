@@ -11,6 +11,7 @@ public class Candidate extends AbstractUser {
         super(builder);
         photo = builder.photo;
         gender = builder.gender;
+        photo = "";
     }
 
     public void setPhoto(String photo) {
