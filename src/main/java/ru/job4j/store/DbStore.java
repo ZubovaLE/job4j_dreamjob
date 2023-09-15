@@ -203,6 +203,18 @@ public class DbStore implements Store {
         return null;
     }
 
+    @Override
+    public boolean delete(int id) {
+        try (Connection conn = this.pool.getConnection();
+             PreparedStatement st = conn.prepareStatement("DELETE FROM post WHERE id = ?;")) {
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
     private synchronized void checkCandidatesTable(Connection cn) {
         if (!tableExists) {
             try {
