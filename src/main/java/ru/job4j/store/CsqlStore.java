@@ -3,16 +3,15 @@ package ru.job4j.store;
 import org.apache.commons.dbcp2.BasicDataSource;
 import ru.job4j.models.Candidate;
 import ru.job4j.models.Gender;
-import ru.job4j.models.Post;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.*;
 
-public class DbStore implements Store {
+public class CsqlStore implements Store<Candidate> {
 
-    private static final DbStore instance = new DbStore();
+    private static final CsqlStore instance = new CsqlStore();
 
     private final BasicDataSource pool = new BasicDataSource();
 
@@ -21,11 +20,11 @@ public class DbStore implements Store {
     private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS candidates(id SERIAL PRIMARY KEY, " +
             "lastName TEXT, firstName TEXT, gender TEXT);";
 
-    private DbStore() {
+    private CsqlStore() {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
                 new InputStreamReader(
-                        Objects.requireNonNull(DbStore.class.getClassLoader()
+                        Objects.requireNonNull(PsqlStore.class.getClassLoader()
                                 .getResourceAsStream("db.properties"))
                 )
         )) {
@@ -48,30 +47,15 @@ public class DbStore implements Store {
     }
 
     private static final class Lazy {
-        private static final Store INST = new DbStore();
+        private static final Store<Candidate> INST = new CsqlStore();
     }
 
-    public static Store instOf() {
-        return Lazy.INST;
+    public static Store<Candidate> instOf() {
+        return CsqlStore.Lazy.INST;
     }
 
-    public Collection<Post> findAllPosts() {
-        List<Post> posts = new ArrayList<>();
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")
-        ) {
-            try (ResultSet it = ps.executeQuery()) {
-                while (it.next()) {
-                    posts.add(new Post(it.getInt("id"), it.getString("name")));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return posts;
-    }
-
-    public Collection<Candidate> findAllCandidates() {
+    @Override
+    public Collection<Candidate> findAll() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates")) {
@@ -88,38 +72,13 @@ public class DbStore implements Store {
         return candidates;
     }
 
-    public void save(Post post) {
-        if (post.getId() == 0) {
-            create(post);
-        } else {
-            update(post);
-        }
-    }
-
+    @Override
     public void save(Candidate candidate) {
         if (candidate.getId() == 0) {
             create(candidate);
         } else {
             update(candidate);
         }
-    }
-
-    private Post create(Post post) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
-                     PreparedStatement.RETURN_GENERATED_KEYS)
-        ) {
-            ps.setString(1, post.getName());
-            ps.execute();
-            try (ResultSet id = ps.getGeneratedKeys()) {
-                if (id.next()) {
-                    post.setId(id.getInt(1));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return post;
     }
 
     private Candidate create(Candidate candidate) {
@@ -143,17 +102,6 @@ public class DbStore implements Store {
         return candidate;
     }
 
-    private void update(Post post) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?")) {
-            ps.setString(1, post.getName());
-            ps.setInt(2, post.getId());
-            ps.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection()) {
             checkCandidatesTable(cn);
@@ -168,23 +116,8 @@ public class DbStore implements Store {
         }
     }
 
-    public Post findPostById(int id) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id = ?")
-        ) {
-            ps.setInt(1, id);
-            try (ResultSet it = ps.executeQuery()) {
-                if (it.next()) {
-                    return new Post(it.getInt("id"), it.getString("name"));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Candidate findCandidateById(int id) {
+    @Override
+    public Candidate findById(int id) {
         try (Connection cn = pool.getConnection()) {
             checkCandidatesTable(cn);
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates WHERE id = ?");
@@ -201,18 +134,6 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        try (Connection conn = this.pool.getConnection();
-             PreparedStatement st = conn.prepareStatement("DELETE FROM post WHERE id = ?;")) {
-            st.setInt(1, id);
-            st.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return true;
     }
 
     private synchronized void checkCandidatesTable(Connection cn) {
@@ -237,5 +158,10 @@ public class DbStore implements Store {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 }

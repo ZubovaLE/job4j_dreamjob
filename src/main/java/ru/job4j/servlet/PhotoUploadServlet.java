@@ -5,7 +5,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ru.job4j.models.Candidate;
-import ru.job4j.store.DbStore;
+import ru.job4j.store.CsqlStore;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -52,9 +52,9 @@ public class PhotoUploadServlet extends HttpServlet {
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }
-                    Candidate candidate = DbStore.instOf().findCandidateById(id);
+                    Candidate candidate = CsqlStore.instOf().findById(id);
                     candidate.setPhoto(id + "." + item.getName().split("\\.")[1]);
-                    DbStore.instOf().save(candidate);
+                    CsqlStore.instOf().save(candidate);
                 }
             }
         } catch (FileUploadException e) {

@@ -1,5 +1,5 @@
 <%@ page import="ru.job4j.models.Candidate" %>
-<%@ page import="ru.job4j.store.DbStore" %>
+<%@ page import="ru.job4j.store.PsqlStore" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -27,7 +27,7 @@
     String id = request.getParameter("id");
     Candidate candidate = new Candidate.CandidateBuilder(0, "", "").build();
     if (id != null) {
-        candidate = DbStore.instOf().findCandidateById(Integer.parseInt(id));
+        candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
 %>
 <div class="container pt-3">

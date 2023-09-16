@@ -5,18 +5,12 @@ import ru.job4j.models.Post;
 
 import java.util.Collection;
 
-public interface Store {
-    Collection<Post> findAllPosts();
+public interface Store<E> {
+    Collection<E> findAll();
 
-    Collection<Candidate> findAllCandidates();
+    void save(E e);
 
-    void save(Post post);
-
-    void save(Candidate candidate);
-
-    Post findPostById(int id);
-
-    Candidate findCandidateById(int id);
+    E findById(int id);
 
     boolean delete (int id);
 }
