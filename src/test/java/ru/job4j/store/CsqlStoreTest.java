@@ -8,14 +8,13 @@ import ru.job4j.models.Gender;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CsqlStoreTest {
 
     @Test
     @DisplayName("When create candidate")
     public void whenCreateCandidate() {
-        Store store = CsqlStore.instOf();
+        Store<Candidate> store = CsqlStore.instOf();
         Candidate candidate = new Candidate.CandidateBuilder(0, "Jackson", "James")
                 .withGender(Gender.MALE).build();
         store.save(candidate);
@@ -26,7 +25,7 @@ class CsqlStoreTest {
     @Test
     @DisplayName("When findAllCandidates")
     public void whenFindAllCandidates() {
-        Store store = PsqlStore.instOf();
+        Store<Candidate> store = CsqlStore.instOf();
         Candidate candidateOne = new Candidate.CandidateBuilder(0, "Jackson", "James")
                 .withGender(Gender.MALE).build();
         Candidate candidateTwo = new Candidate.CandidateBuilder(0, "Clark", "Katy")

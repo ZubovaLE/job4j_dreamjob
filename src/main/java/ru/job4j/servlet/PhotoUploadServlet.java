@@ -28,37 +28,48 @@ public class PhotoUploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletContext servletContext = this.getServletConfig().getServletContext();
-        File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
-        factory.setRepository(repository);
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        try {
-            List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("c:\\images\\");
-            if (!folder.exists()) {
-                folder.mkdir();
-            }
-            StringBuilder sb;
-            for (FileItem item : items) {
-                sb = new StringBuilder();
-                if (!item.isFormField()) {
-                    sb.append(folder);
-                    sb.append(File.separator);
-                    sb.append(id);
-                    sb.append(".");
-                    sb.append(item.getName().split("\\.")[1]);
-                    File file = new File(sb.toString());
-                    try (FileOutputStream out = new FileOutputStream(file)) {
-                        out.write(item.getInputStream().readAllBytes());
-                    }
-                    Candidate candidate = CsqlStore.instOf().findById(id);
-                    candidate.setPhoto(id + "." + item.getName().split("\\.")[1]);
-                    CsqlStore.instOf().save(candidate);
+        String photo = req.getParameter("photo");
+
+        if (photo != null) {
+            String lastName = req.getParameter("lastName");
+            String firstName = req.getParameter("firstName");
+            Candidate candidate = new Candidate.CandidateBuilder(id, lastName, firstName).withPhoto(photo).build();
+            CsqlStore.instOf().save(candidate);
+            File file = new File("c:\\images\\" + photo);
+            file.delete();
+        } else {
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+            ServletContext servletContext = this.getServletConfig().getServletContext();
+            File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+            factory.setRepository(repository);
+            ServletFileUpload upload = new ServletFileUpload(factory);
+            try {
+                List<FileItem> items = upload.parseRequest(req);
+                File folder = new File("c:\\images\\");
+                if (!folder.exists()) {
+                    folder.mkdir();
                 }
+                StringBuilder sb;
+                for (FileItem item : items) {
+                    sb = new StringBuilder();
+                    if (!item.isFormField()) {
+                        sb.append(folder);
+                        sb.append(File.separator);
+                        sb.append(id);
+                        sb.append(".");
+                        sb.append(item.getName().split("\\.")[1]);
+                        File file = new File(sb.toString());
+                        try (FileOutputStream out = new FileOutputStream(file)) {
+                            out.write(item.getInputStream().readAllBytes());
+                        }
+                        Candidate candidate = (Candidate) CsqlStore.instOf().findById(id);
+                        candidate.setPhoto(id + "." + item.getName().split("\\.")[1]);
+                        CsqlStore.instOf().save(candidate);
+                    }
+                }
+            } catch (FileUploadException e) {
+                e.printStackTrace();
             }
-        } catch (FileUploadException e) {
-            e.printStackTrace();
         }
         req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
