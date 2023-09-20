@@ -30,60 +30,84 @@
     <title>Работа мечты</title>
 </head>
 <body>
-<div class="container pt-3">
+<div class="container">
     <div class="row">
-        <div class="card" style="width: 100%">
-            <div class="card-header">
-                Кандидаты
-            </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Фамилия</th>
-                        <th scope="col">Имя</th>
-                        <th scope="col">Пол</th>
-                        <th scope="col">Фото</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${candidates}" var="candidate">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Вакансии</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+            </li>
+            <c:if test="${user != null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/logout.do"><c:out value="${user.name}"/> |
+                        Выйти</a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
+    <div class="container pt-3">
+        <div class="row">
+            <div class="card" style="width: 100%">
+                <div class="card-header">
+                    Кандидаты
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
                         <tr>
-                            <td>
-                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
-                                    <i class="fa fa-edit mr-3"></i>
-                                </a>
-                                <c:out value="${candidate.lastName}"/>
-                            </td>
-                            <td>
-                                <c:out value="${candidate.firstName}"/>
-                            </td>
-                            <td>
-                                <c:out value="${candidate.gender}"/>
-                            </td>
-                            <td>
-                                <c:out value="${candidate.photo}"/>
-                                <form action='<c:url value="/upload"/>' method="get">
-                                    <input type="hidden" class="form-control" name="id"
-                                           value="<c:out value="${candidate.id}"/>">
-                                    <button type="submit" class="btn btn-primary">Добавить</button>
-                                </form>
-                                <form action="<c:url value='/upload'/>" method="post">
-                                    <input type="hidden" class="form-control" name="id"
-                                           value="<c:out value="${candidate.id}"/>">
-                                    <input type="hidden" class="form-control" name="lastName"
-                                           value="<c:out value="${candidate.lastName}"/>">
-                                    <input type="hidden" class="form-control" name="firstName"
-                                           value="<c:out value="${candidate.firstName}"/>">
-                                    <input type="hidden" class="form-control" name="photo"
-                                           value="<c:out value="${candidate.photo}"/>">
-                                    <button type="submit" class="btn btn-primary">Удалить</button>
-                                </form>
-                            </td>
+                            <th scope="col">Фамилия</th>
+                            <th scope="col">Имя</th>
+                            <th scope="col">Пол</th>
+                            <th scope="col">Фото</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${candidates}" var="candidate">
+                            <tr>
+                                <td>
+                                    <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
+                                        <i class="fa fa-edit mr-3"></i>
+                                    </a>
+                                    <c:out value="${candidate.lastName}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${candidate.firstName}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${candidate.gender}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${candidate.photo}"/>
+                                    <form action='<c:url value="/upload"/>' method="get">
+                                        <input type="hidden" class="form-control" name="id"
+                                               value="<c:out value="${candidate.id}"/>">
+                                        <button type="submit" class="btn btn-primary">Добавить</button>
+                                    </form>
+                                    <form action="<c:url value='/upload'/>" method="post">
+                                        <input type="hidden" class="form-control" name="id"
+                                               value="<c:out value="${candidate.id}"/>">
+                                        <input type="hidden" class="form-control" name="lastName"
+                                               value="<c:out value="${candidate.lastName}"/>">
+                                        <input type="hidden" class="form-control" name="firstName"
+                                               value="<c:out value="${candidate.firstName}"/>">
+                                        <input type="hidden" class="form-control" name="photo"
+                                               value="<c:out value="${candidate.photo}"/>">
+                                        <button type="submit" class="btn btn-primary">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
