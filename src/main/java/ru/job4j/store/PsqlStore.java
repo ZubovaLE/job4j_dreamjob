@@ -1,8 +1,6 @@
 package ru.job4j.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import ru.job4j.models.Candidate;
-import ru.job4j.models.Gender;
 import ru.job4j.models.Post;
 
 import java.io.BufferedReader;
@@ -15,11 +13,6 @@ public class PsqlStore implements Store<Post> {
     private static final PsqlStore instance = new PsqlStore();
 
     private final BasicDataSource pool = new BasicDataSource();
-
-    private volatile boolean tableExists = false;
-
-    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS candidates(id SERIAL PRIMARY KEY, " +
-            "lastName TEXT, firstName TEXT, gender TEXT);";
 
     private PsqlStore() {
         Properties cfg = new Properties();

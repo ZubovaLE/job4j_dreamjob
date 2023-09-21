@@ -1,0 +1,6 @@
+CREATE TABLE user (
+id SERIAL PRIMARY KEY,
+name VARCHAR (30) UNIQUE,
+email VARCHAR (50),
+password VARCHAR (64)
+);
