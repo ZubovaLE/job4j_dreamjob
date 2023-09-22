@@ -11,8 +11,6 @@ import java.util.*;
 
 public class CsqlStore implements Store<Candidate> {
 
-    private static final CsqlStore instance = new CsqlStore();
-
     private final BasicDataSource pool = new BasicDataSource();
 
     private volatile boolean tableExists = false;
@@ -133,6 +131,11 @@ public class CsqlStore implements Store<Candidate> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    @Override
+    public Candidate findByEmail(String email) {
         return null;
     }
 

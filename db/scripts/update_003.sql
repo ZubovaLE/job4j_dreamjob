@@ -1,6 +1,6 @@
-CREATE TABLE user (
+CREATE TABLE users (
 id SERIAL PRIMARY KEY,
-name VARCHAR (30) UNIQUE,
+name VARCHAR (50),
 email VARCHAR (50),
 password VARCHAR (64)
 );

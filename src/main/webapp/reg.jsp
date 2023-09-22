@@ -1,4 +1,5 @@
-<%--
+<%@ page import="ru.job4j.models.User" %>
+<%@ page import="ru.job4j.store.UsqlStore" %><%--
   Created by IntelliJ IDEA.
   User: Professional
   Date: 20.09.2023
@@ -29,18 +30,24 @@
 </head>
 <body>
 <div class="container pt-3">
-    <div class="card-header">Новый пользователь</div>
-</div>
-<div class="card-body">
-    <form action="<%=request.getContextPath()%>/reg.do" method="post">
-        <div class="form-group">
-            <label>Почта</label>
-            <input type="text" class="form-control" name="email">
-            <label>Пароль</label>
-            <input type="text" class="form-control" name="password">
+    <div class="row">
+        <div class="card" style="width: 100%">
+            <div class="card-header">Новый пользователь</div>
+            <div class="card-body">
+                <form action="<%=request.getContextPath()%>/reg.do" method="post">
+                    <div class="form-group">
+                        <label>Имя</label>
+                        <input type="text" class="form-control" name="name">
+                        <label>Почта</label>
+                        <input type="text" class="form-control" name="email">
+                        <label>Пароль</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </form>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-    </form>
+    </div>
 </div>
 </body>
 </html>

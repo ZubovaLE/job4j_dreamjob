@@ -10,8 +10,6 @@ import java.util.*;
 
 public class PsqlStore implements Store<Post> {
 
-    private static final PsqlStore instance = new PsqlStore();
-
     private final BasicDataSource pool = new BasicDataSource();
 
     private PsqlStore() {
@@ -48,6 +46,7 @@ public class PsqlStore implements Store<Post> {
         return Lazy.INST;
     }
 
+    @Override
     public Collection<Post> findAll() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
@@ -64,6 +63,7 @@ public class PsqlStore implements Store<Post> {
         return posts;
     }
 
+    @Override
     public void save(Post post) {
         if (post.getId() == 0) {
             create(post);
@@ -101,6 +101,7 @@ public class PsqlStore implements Store<Post> {
         }
     }
 
+    @Override
     public Post findById(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id = ?")
@@ -114,6 +115,11 @@ public class PsqlStore implements Store<Post> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    @Override
+    public Post findByEmail(String email) {
         return null;
     }
 

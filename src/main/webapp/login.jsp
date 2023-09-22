@@ -24,16 +24,11 @@
 <body>
 <div class="container pt-3">
     <div class="row">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
-            </li>
-        </ul>
         <div class="card" style="width: 100%">
-            <div class="card-header">
-                Авторизация
+            <div class="card-header" style="background-color: cadetblue; text-align: center;">
+                <label style="font-size: large; font-family: Arial,serif">Авторизация</label>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="background-color: lightblue">
                 <form action="<%=request.getContextPath()%>/auth.do" method="post">
                     <div class="form-group">
                         <label>Почта</label>
@@ -43,7 +38,16 @@
                         <label>Пароль</label>
                         <input type="text" class="form-control" name="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
+                    <table>
+                        <tr>
+                            <td>
+                                <button type="submit" class="btn btn-primary">Вход</button>
+                            </td>
+                            <td>
+                                <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
+                            </td>
+                        </tr>
+                    </table>
                     <c:if test="${not empty error}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
                                 ${error}

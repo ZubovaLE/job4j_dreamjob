@@ -1,6 +1,8 @@
 package ru.job4j.servlet;
 
 import ru.job4j.models.User;
+import ru.job4j.store.Store;
+import ru.job4j.store.UsqlStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +21,9 @@ public class AuthServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        if ("root@local".equals(email) && "root".equals(password)) {
+        Store<User> store = UsqlStore.instOf();
+        User userFromDB = store.findByEmail(email);
+        if (userFromDB != null && userFromDB.getPassword().equals(password)) {
             HttpSession sc = req.getSession();
             User admin = new User();
             admin.setName("Admin");

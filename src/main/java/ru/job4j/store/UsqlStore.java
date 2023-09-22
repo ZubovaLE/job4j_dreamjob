@@ -5,12 +5,16 @@ import ru.job4j.models.User;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.*;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Properties;
 
 public class UsqlStore implements Store<User> {
     private final BasicDataSource pool = new BasicDataSource();
+    private volatile boolean tableExists = false;
+    private static final String CREATE_TABLE = "CREATE TABLE users (id SERIAL PRIMARY KEY, name VARCHAR (50), " +
+            "email VARCHAR (50), password VARCHAR (64));";
 
     private UsqlStore() {
         Properties cfg = new Properties();
@@ -53,20 +57,115 @@ public class UsqlStore implements Store<User> {
 
     @Override
     public void save(User user) {
+        if (findByEmail(user.getEmail()) == null) {
+            create(user);
+        } else {
+            update(user);
+        }
+    }
 
+    private User create(User user) {
+        try (Connection cn = pool.getConnection()) {
+            checkUsersTable(cn);
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO users(name, email, password) VALUES(?, ?, ?)",
+                    PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    private void update(User user) {
+        try (Connection cn = pool.getConnection()) {
+            checkUsersTable(cn);
+            PreparedStatement ps = cn.prepareStatement("UPDATE users SET name = ?, password = ? WHERE email = ?");
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public User findById(int id) {
+        try (Connection cn = pool.getConnection()) {
+            checkUsersTable(cn);
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE id = ?");
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new User(it.getInt("id"), it.getString("name"),
+                            it.getString("email"), it.getString("password"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement st = cn.prepareStatement("DELETE FROM users WHERE id = ?;")) {
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
+    @Override
     public User findByEmail(String email) {
-        return new User();
+        try (Connection connection = pool.getConnection()) {
+            checkUsersTable(connection);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new User(rs.getInt("id"), rs.getString("name"),
+                            rs.getString("email"), rs.getString("password"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private synchronized void checkUsersTable(Connection cn) {
+        if (!tableExists) {
+            try {
+                DatabaseMetaData metaData = cn.getMetaData();
+                ResultSet resultSet = metaData.getTables(null, null, "users",
+                        new String[]{"TABLES"});
+                tableExists = resultSet.next();
+                if (!tableExists) {
+                    createUsersTable(cn);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void createUsersTable(Connection cn) {
+        try (Statement statement = cn.createStatement()) {
+            statement.executeUpdate(CREATE_TABLE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
