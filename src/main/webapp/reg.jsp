@@ -32,8 +32,10 @@
 <div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
-            <div class="card-header">Новый пользователь</div>
-            <div class="card-body">
+            <div class="card-header" style="background-color: cadetblue; text-align: center">
+                <label style="font-size: large; font-family: Arial,serif;">Новый пользователь</label>
+            </div>
+            <div class="card-body" style="background-color: lightblue">
                 <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
                         <label>Имя</label>

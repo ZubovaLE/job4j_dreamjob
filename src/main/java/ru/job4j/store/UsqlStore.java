@@ -130,7 +130,6 @@ public class UsqlStore implements Store<User> {
     @Override
     public User findByEmail(String email) {
         try (Connection connection = pool.getConnection()) {
-            checkUsersTable(connection);
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {

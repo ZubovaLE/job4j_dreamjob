@@ -85,7 +85,6 @@
                                     <c:out value="${candidate.gender}"/>
                                 </td>
                                 <td>
-                                    <c:out value="${candidate.photo}"/>
                                     <form action='<c:url value="/upload"/>' method="get">
                                         <input type="hidden" class="form-control" name="id"
                                                value="<c:out value="${candidate.id}"/>">

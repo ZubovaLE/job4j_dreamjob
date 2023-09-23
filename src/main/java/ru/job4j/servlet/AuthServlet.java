@@ -25,10 +25,7 @@ public class AuthServlet extends HttpServlet {
         User userFromDB = store.findByEmail(email);
         if (userFromDB != null && userFromDB.getPassword().equals(password)) {
             HttpSession sc = req.getSession();
-            User admin = new User();
-            admin.setName("Admin");
-            admin.setEmail(email);
-            sc.setAttribute("user", admin);
+            sc.setAttribute("user", userFromDB);
             resp.sendRedirect(req.getContextPath() + "/posts.do");
         } else {
             req.setAttribute("error", "Неверный email или пароль");

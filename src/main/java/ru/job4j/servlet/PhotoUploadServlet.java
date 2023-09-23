@@ -29,7 +29,6 @@ public class PhotoUploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         String photo = req.getParameter("photo");
-
         if (photo != null) {
             String lastName = req.getParameter("lastName");
             String firstName = req.getParameter("firstName");
