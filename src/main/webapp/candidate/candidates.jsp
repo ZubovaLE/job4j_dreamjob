@@ -16,6 +16,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
@@ -77,6 +78,24 @@
                                         <i class="fa fa-edit mr-3"></i>
                                     </a>
                                     <c:out value="${candidate.lastName}"/>
+
+                                    <div class="form-group">
+                                        <form action='<c:url value='/candidates.do'/>' method='post'>
+                                            <input type="hidden" class="form-control" name="id"
+                                                   value="<c:out value="${can.id}"/>">
+                                            <button type="button" class="btn btn-primary"><span id="boot-icon"
+                                                                                                class="bi bi-trash"
+                                                                                                style="font-size: 5%;
+                                                                                                color: rgb(255, 0, 0);
+                                                                                                background-color:
+                                                                                                rgb(242, 242, 242);">
+
+                                            </span>
+                                            </button>
+                                            </a>
+                                        </form>
+                                    </div>
+
                                 </td>
                                 <td>
                                     <c:out value="${candidate.firstName}"/>

@@ -165,6 +165,13 @@ public class CsqlStore implements Store<Candidate> {
 
     @Override
     public boolean delete(int id) {
+        try (Connection cn = pool.getConnection()) {
+            PreparedStatement ps = cn.prepareStatement("DELETE FROM candidates  WHERE id = ?;");
+            ps.setInt(1, id);
+            return (ps.executeUpdate() > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }
