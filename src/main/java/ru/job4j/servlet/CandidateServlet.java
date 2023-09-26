@@ -26,7 +26,6 @@ public class CandidateServlet extends HttpServlet {
         String lastName = req.getParameter("lastName");
         if (lastName == null) {
             CsqlStore.instOf().delete(id);
-            resp.sendRedirect(req.getContextPath() + "/index.do");
         } else {
             CsqlStore.instOf().save(
                     new Candidate.CandidateBuilder(
@@ -34,7 +33,7 @@ public class CandidateServlet extends HttpServlet {
                             lastName,
                             req.getParameter("firstName")
                     ).withGender(Gender.valueOf(req.getParameter("gender"))).build());
-            resp.sendRedirect(req.getContextPath() + "/candidates.do");
         }
+        resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

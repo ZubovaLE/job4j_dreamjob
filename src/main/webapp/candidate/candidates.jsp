@@ -74,28 +74,20 @@
                         <c:forEach items="${candidates}" var="candidate">
                             <tr>
                                 <td>
-                                    <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
-                                        <i class="fa fa-edit mr-3"></i>
+                                    <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'
+                                       title="Редактировать кандидата">
+                                        <i class="fa fa-edit fa-2x"></i>
                                     </a>
                                     <c:out value="${candidate.lastName}"/>
-
-                                    <div class="form-group">
-                                        <form action='<c:url value='/candidates.do'/>' method='post'>
+                                    <div class="fa-2x">
+                                        <form action='<c:url value="/candidates.do"/>' method="post">
                                             <input type="hidden" class="form-control" name="id"
-                                                   value="<c:out value="${can.id}"/>">
-                                            <button type="button" class="btn btn-primary"><span id="boot-icon"
-                                                                                                class="bi bi-trash"
-                                                                                                style="font-size: 5%;
-                                                                                                color: rgb(255, 0, 0);
-                                                                                                background-color:
-                                                                                                rgb(242, 242, 242);">
-
-                                            </span>
-                                            </button>
-                                            </a>
+                                                   value="<c:out value="${candidate.id}"/>">
+                                            <button type="submit" class="btn btn-outline-danger"
+                                                    title="Удалить кандидата"><i
+                                                    class="bi bi-trash"></i></button>
                                         </form>
                                     </div>
-
                                 </td>
                                 <td>
                                     <c:out value="${candidate.firstName}"/>
