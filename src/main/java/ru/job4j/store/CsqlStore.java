@@ -13,11 +13,6 @@ public class CsqlStore implements Store<Candidate> {
 
     private final BasicDataSource pool = new BasicDataSource();
 
-    private volatile boolean tableExists = false;
-
-    private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS candidates(id SERIAL PRIMARY KEY, " +
-            "lastName TEXT, firstName TEXT, gender TEXT);";
-
     private CsqlStore() {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
@@ -81,7 +76,6 @@ public class CsqlStore implements Store<Candidate> {
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection()) {
-            checkCandidatesTable(cn);
             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName, gender) " +
                             "VALUES (?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
@@ -102,7 +96,6 @@ public class CsqlStore implements Store<Candidate> {
 
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection()) {
-            checkCandidatesTable(cn);
             PreparedStatement ps = cn.prepareStatement("UPDATE candidates SET lastName = ?, firstName = ? " +
                     "WHERE id = ?");
             ps.setString(1, candidate.getLastName());
@@ -117,7 +110,6 @@ public class CsqlStore implements Store<Candidate> {
     @Override
     public Candidate findById(int id) {
         try (Connection cn = pool.getConnection()) {
-            checkCandidatesTable(cn);
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates WHERE id = ?");
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
@@ -137,30 +129,6 @@ public class CsqlStore implements Store<Candidate> {
     @Override
     public Candidate findByEmail(String email) {
         return null;
-    }
-
-    private synchronized void checkCandidatesTable(Connection cn) {
-        if (!tableExists) {
-            try {
-                DatabaseMetaData metaData = cn.getMetaData();
-                ResultSet resultSet = metaData.getTables(null, null, "candidates",
-                        new String[]{"TABLES"});
-                tableExists = resultSet.next();
-                if (!tableExists) {
-                    createCandidatesTable(cn);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void createCandidatesTable(Connection cn) {
-        try (Statement statement = cn.createStatement()) {
-            statement.executeUpdate(CREATE_TABLE);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

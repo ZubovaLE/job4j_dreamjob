@@ -12,9 +12,6 @@ import java.util.Properties;
 
 public class UsqlStore implements Store<User> {
     private final BasicDataSource pool = new BasicDataSource();
-    private volatile boolean tableExists = false;
-    private static final String CREATE_TABLE = "CREATE TABLE users (id SERIAL PRIMARY KEY, name VARCHAR (50), " +
-            "email VARCHAR (50), password VARCHAR (64));";
 
     private UsqlStore() {
         Properties cfg = new Properties();
@@ -66,7 +63,6 @@ public class UsqlStore implements Store<User> {
 
     private User create(User user) {
         try (Connection cn = pool.getConnection()) {
-            checkUsersTable(cn);
             PreparedStatement ps = cn.prepareStatement("INSERT INTO users(name, email, password) VALUES(?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getName());
@@ -86,7 +82,6 @@ public class UsqlStore implements Store<User> {
 
     private void update(User user) {
         try (Connection cn = pool.getConnection()) {
-            checkUsersTable(cn);
             PreparedStatement ps = cn.prepareStatement("UPDATE users SET name = ?, password = ? WHERE email = ?");
             ps.setString(1, user.getName());
             ps.setString(2, user.getPassword());
@@ -100,7 +95,6 @@ public class UsqlStore implements Store<User> {
     @Override
     public User findById(int id) {
         try (Connection cn = pool.getConnection()) {
-            checkUsersTable(cn);
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE id = ?");
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
@@ -142,29 +136,5 @@ public class UsqlStore implements Store<User> {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private synchronized void checkUsersTable(Connection cn) {
-        if (!tableExists) {
-            try {
-                DatabaseMetaData metaData = cn.getMetaData();
-                ResultSet resultSet = metaData.getTables(null, null, "users",
-                        new String[]{"TABLES"});
-                tableExists = resultSet.next();
-                if (!tableExists) {
-                    createUsersTable(cn);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void createUsersTable(Connection cn) {
-        try (Statement statement = cn.createStatement()) {
-            statement.executeUpdate(CREATE_TABLE);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
