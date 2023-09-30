@@ -137,4 +137,9 @@ public class UsqlStore implements Store<User> {
         }
         return null;
     }
+
+    @Override
+    public User findByName(String name) {
+        return null;
+    }
 }

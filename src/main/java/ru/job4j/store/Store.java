@@ -11,5 +11,7 @@ public interface Store<E> {
 
     E findByEmail(String email);
 
-    boolean delete (int id);
+    E findByName(String name);
+
+    boolean delete(int id);
 }

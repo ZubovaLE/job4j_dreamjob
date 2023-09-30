@@ -2,14 +2,11 @@ package ru.job4j.store;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.job4j.models.Candidate;
-import ru.job4j.models.Gender;
 import ru.job4j.models.Post;
 
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
-
 
 class PsqlStoreTest {
     @Test

@@ -124,6 +124,11 @@ public class PsqlStore implements Store<Post> {
     }
 
     @Override
+    public Post findByName(String name) {
+        return null;
+    }
+
+    @Override
     public boolean delete(int id) {
         try (Connection conn = this.pool.getConnection();
              PreparedStatement st = conn.prepareStatement("DELETE FROM post WHERE id = ?;")) {
