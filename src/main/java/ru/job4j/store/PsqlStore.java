@@ -125,6 +125,17 @@ public class PsqlStore implements Store<Post> {
 
     @Override
     public Post findByName(String name) {
+        try (Connection cn = pool.getConnection()) {
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE name LIKE ?");
+            ps.setString(1, name);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Post(rs.getInt("id"), rs.getString("name"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
