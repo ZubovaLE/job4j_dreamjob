@@ -3,6 +3,7 @@ package ru.job4j.servlet;
 import ru.job4j.models.Candidate;
 import ru.job4j.models.Gender;
 import ru.job4j.store.CsqlStore;
+import ru.job4j.store.Store;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,9 +13,10 @@ import java.io.IOException;
 
 public class CandidateServlet extends HttpServlet {
 
+    private final Store<Candidate> store = CsqlStore.instOf();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("candidates", CsqlStore.instOf().findAll());
+        req.setAttribute("candidates", store.findAll());
         req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("candidate/candidates.jsp").forward(req, resp);
     }
@@ -25,9 +27,9 @@ public class CandidateServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         String lastName = req.getParameter("lastName");
         if (lastName == null) {
-            CsqlStore.instOf().delete(id);
+            store.delete(id);
         } else {
-            CsqlStore.instOf().save(
+            store.save(
                     new Candidate.CandidateBuilder(
                             id,
                             lastName,
