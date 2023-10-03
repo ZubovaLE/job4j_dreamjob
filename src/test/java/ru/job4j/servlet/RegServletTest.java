@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 class RegServletTest {
 
     @Test
-    @DisplayName("Create user")
+    @DisplayName("Find user by email")
     void whenCreateUser() throws ServletException, IOException {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
@@ -26,6 +26,18 @@ class RegServletTest {
         when(req.getParameter("password")).thenReturn("password");
         new RegServlet().doPost(req, resp);
         User user = UsqlStore.instOf().findByEmail("email");
+        assertNotNull(user);
+    }
+
+    @Test
+    @DisplayName("Find user by id")
+    void findUserById() throws ServletException, IOException {
+        HttpServletRequest req = mock(HttpServletRequest.class);
+        HttpServletResponse resp = mock(HttpServletResponse.class);
+        when(req.getParameter("email")).thenReturn("email");
+        when(req.getParameter("password")).thenReturn("password");
+        new RegServlet().doPost(req, resp);
+        User user = UsqlStore.instOf().findById(1);
         assertNotNull(user);
     }
 }
