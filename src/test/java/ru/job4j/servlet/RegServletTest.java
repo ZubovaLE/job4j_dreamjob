@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,7 +21,7 @@ class RegServletTest {
 
     @Test
     @DisplayName("Find user by email")
-    void whenCreateUser() throws ServletException, IOException {
+    void whenCreateUserAndFindByEmailThenReturnUser() throws ServletException, IOException {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
         when(req.getParameter("email")).thenReturn("email");
@@ -27,11 +29,12 @@ class RegServletTest {
         new RegServlet().doPost(req, resp);
         User user = UsqlStore.instOf().findByEmail("email");
         assertNotNull(user);
+        assertThat(user.getPassword(), is("password"));
     }
 
     @Test
     @DisplayName("Find user by id")
-    void findUserById() throws ServletException, IOException {
+    void whenCreateUserAndFindByIdThenReturnUser() throws ServletException, IOException {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
         when(req.getParameter("email")).thenReturn("email");

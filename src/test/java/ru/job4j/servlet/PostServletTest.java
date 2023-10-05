@@ -19,12 +19,17 @@ class PostServletTest {
     @Test
     @DisplayName("When create post")
     public void whenCreatePost() throws IOException, ServletException {
+        //Given
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
         when(req.getParameter("id")).thenReturn("0");
         when(req.getParameter("name")).thenReturn("name of new post");
+
+        //When
         new PostServlet().doPost(req, resp);
         Post post = PsqlStore.instOf().findByName("name of new post");
+
+        //Then
         assertNotNull(post);
     }
 }
