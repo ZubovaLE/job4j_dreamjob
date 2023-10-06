@@ -6,9 +6,7 @@ import ru.job4j.models.User;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.*;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 public class UsqlStore implements Store<User> {
     private final BasicDataSource pool = new BasicDataSource();
@@ -49,7 +47,19 @@ public class UsqlStore implements Store<User> {
 
     @Override
     public Collection<User> findAll() {
-        return null;
+        List<User> users = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users")) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    users.add(new User(it.getInt("id"), it.getString("name"),
+                            it.getString("email"), it.getString("password")));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 
     @Override
