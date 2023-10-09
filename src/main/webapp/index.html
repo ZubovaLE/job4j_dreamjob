@@ -9,37 +9,62 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container-fluid">
-    <h1>My First Bootstrap Page</h1>
-    <p>This is some text.</p>
+    <h1>Регистрация</h1>
+    <p>Введите информацию о себе</p>
 </div>
-
 <form>
     <div class="form-group">
         <label>Имя</label>
         <input type="text" class="form-control" name="firstName">
-        <small class="form-text text text-muted">Введите своё имя</small>
     </div>
     <div class="form-group">
         <label>Фамилия</label>
         <input type="text" class="form-control" name="lastName">
     </div>
-    <div class="form-group">
-        <div class="form-check">
-            <input type="radio" class="form-check-input" name="gender">
-            <label>муж</label>
-        </div>
-        <div class="form-check">
-            <input type="radio" class="form-check-input" name="gender">
-            <label>жен</label>
+    <div class="custom-select">
+        <label>Пол</label>
+        <div class="form-group">
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="gender">
+                <label>Мужчина</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="gender">
+                <label>Женщина</label>
+            </div>
         </div>
     </div>
     <div class="form-group">
         <label>Описание</label>
         <textarea class="form-control" name="description" rows="3"></textarea>
+        <small class="form-text text text-muted">Опишите свои навыки</small>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button style="margin-bottom: 20px" type="submit" class="btn btn-primary">Submit</button>
 </form>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">№</th>
+        <th scope="col">Столбец 1</th>
+        <th scope="col">Столбец 2</th>
+        <th scope="col">Столбец 3</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">1</th>
+        <td>Зачение 1</td>
+        <td>Зачение 2</td>
+        <td>Зачение 3</td>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
+        <td>Зачение 4</td>
+        <td>Зачение 5</td>
+        <td>Зачение 6</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
