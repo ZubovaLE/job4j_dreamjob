@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            var firstName = $('#firstName').val();
+            var lastName = $('lastName').val();
+            var description = $('dscr').val();
+            if (firstName === '') {
+                alert($('#firstName').attr('title'));
+            }
+            if (lastName === '') {
+                alert($('#lastName').attr('title'));
+            }
+            if (dscr === '') {
+                alert($('#dscr').attr('title'));
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -15,12 +31,12 @@
 </div>
 <form>
     <div class="form-group">
-        <label>Имя</label>
-        <input type="text" class="form-control" name="firstName">
+        <label for="firstName">Имя</label>
+        <input type="text" class="form-control" name="firstName" title="Введите имя пользователя" id="firstName">
     </div>
     <div class="form-group">
-        <label>Фамилия</label>
-        <input type="text" class="form-control" name="lastName">
+        <label for="lastName">Фамилия</label>
+        <input type="text" class="form-control" name="lastName" title="Введите фамилию пользователя" id="lastName">
     </div>
     <div class="custom-select">
         <label>Пол</label>
@@ -36,13 +52,15 @@
         </div>
     </div>
     <div class="form-group">
-        <label>Описание</label>
-        <textarea class="form-control" name="description" rows="3"></textarea>
+        <label for="dscr">Описание</label>
+        <textarea class="form-control" name="description" rows="3" id="dscr"
+                  title="Расскажите о своих ключевых навыках"></textarea>
         <small class="form-text text text-muted">Опишите свои навыки</small>
     </div>
-    <button style="margin-bottom: 20px" type="submit" class="btn btn-primary">Submit</button>
+    <button style="margin-bottom: 20px" type="submit" class="btn btn-primary" onclick="return validate();">Submit
+    </button>
 </form>
-<table class="table">
+<table>
     <thead>
     <tr>
         <th scope="col">№</th>
@@ -58,7 +76,7 @@
         <td>Зачение 2</td>
         <td>Зачение 3</td>
     </tr>
-    <tr>
+    <tr class="table-info">
         <th scope="row">2</th>
         <td>Зачение 4</td>
         <td>Зачение 5</td>
