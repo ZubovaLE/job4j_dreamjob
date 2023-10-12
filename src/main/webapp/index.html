@@ -9,27 +9,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         function validate() {
-            var firstName = $('#firstName').val();
-            var lastName = $('#lastName').val();
             var description = $('#dscr').val();
-            if (firstName === '') {
-                alert($('#firstName').attr('title'));
-            }
-            if (lastName === '') {
-                alert($('#lastName').attr('title'));
-            }
-            if (description === '') {
-                alert($('#dscr').attr('title'));
-            }
-            if ($('input[name=gender]:checked').length === 0) {
-                alert('Выберите пол');
+            if ($('input[type=text]:not([value=""])').length === 0 ||
+                $('input[name=gender]:checked').length === 0 ||
+                description === '') {
+                alert('Все поля должны быть заполнены');
+                return false;
+            } else {
+                return true;
             }
         }
 
         function addRow() {
-            const firstName = $('firstname').val();
-            const lastName = $('lastname').val();
-            $('#table tr:last').after('<tr><td>' + firstName + '</td><td>' + lastName + '</td>' + '</tr>');
+            const firstName = $('#firstName').val();
+            const lastname = $('#lastName').val();
+            const gender = $('input[name=gender]:checked').val();
+            const description = $('#dscr').val();
+            $('#table tr:last').after('<tr><td>' + firstName + '</td><td>' + lastname + '</td><td>' + gender + '</td>' +
+                '<td><td>' + description + '</td></tr>');
         }
 
     </script>
@@ -43,11 +40,11 @@
     <form>
         <div class="form-group">
             <label for="firstName">Имя</label>
-            <input type="text" class="form-control" name="firstName" title="Введите имя пользователя" id="firstName">
+            <input type="text" class="form-control" name="firstName" id="firstName">
         </div>
         <div class="form-group">
             <label for="lastName">Фамилия</label>
-            <input type="text" class="form-control" name="lastName" title="Введите фамилию пользователя" id="lastName">
+            <input type="text" class="form-control" name="lastName" id="lastName">
         </div>
         <div class="custom-select">
             <label>Пол</label>
@@ -70,12 +67,11 @@
         </div>
         <button type="submit" class="btn btn-primary" onclick="return validate();">Submit
         </button>
-        <button class="btn btn-default" onclick="addRow();">Add row</button>
     </form>
+    <button class="btn btn-default" onclick="addRow();">Add row</button>
     <table class="table" id="table">
         <thead>
         <tr>
-            <th scope="col">№</th>
             <th scope="col">Имя</th>
             <th scope="col">Фамилия</th>
             <th scope="col">Пол</th>
@@ -84,14 +80,12 @@
         </thead>
         <tbody>
         <tr>
-            <th scope="row">1</th>
             <td>Зачение 1</td>
             <td>Зачение 2</td>
             <td>Зачение 3</td>
             <td>Зачение 4</td>
         </tr>
-        <tr class="table-info">
-            <th scope="row">2</th>
+        <tr>
             <td>Зачение 5</td>
             <td>Зачение 6</td>
             <td>Зачение 7</td>
