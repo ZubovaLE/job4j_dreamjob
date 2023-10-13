@@ -16,7 +16,7 @@
                 alert('Все поля должны быть заполнены');
                 return false;
             } else {
-                return true;
+                return addRow();
             }
         }
 
@@ -27,6 +27,7 @@
             const description = $('#dscr').val();
             $('#table tr:last').after('<tr><td>' + firstName + '</td><td>' + lastname + '</td><td>' + gender + '</td>' +
                 '<td><td>' + description + '</td></tr>');
+            return true;
         }
 
     </script>
@@ -68,7 +69,7 @@
         <button type="submit" class="btn btn-primary" onclick="return validate();">Submit
         </button>
     </form>
-    <button class="btn btn-default" onclick="addRow();">Add row</button>
+    <button class="btn btn-default" onclick="return addRow();">Add row</button>
     <table class="table" id="table">
         <thead>
         <tr>
