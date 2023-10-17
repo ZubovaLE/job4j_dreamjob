@@ -22,12 +22,14 @@ public class GreetingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Email email = GSON.fromJson(req.getReader(), Email.class);
-        emails.add(email);
-
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
-        String json = GSON.toJson(email);
-        output.write(json.getBytes(StandardCharsets.UTF_8));
+        if (!emails.contains(email)) {
+            String json = GSON.toJson(email);
+            output.write(json.getBytes(StandardCharsets.UTF_8));
+        } else {
+            output.write("Пользователь с данным email уже зарегистрирован".getBytes(StandardCharsets.UTF_8));
+        }
         output.flush();
         output.close();
     }

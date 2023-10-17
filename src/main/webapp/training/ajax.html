@@ -28,12 +28,17 @@
             type: 'POST',
             url: 'http://localhost:8080/dreamjob/greet',
             data: JSON.stringify({
-                name: $('#exampleInputEmail1').val()
+                name: $('#email').val()
             }),
             dataType: 'json'
         }).done(function (data) {
-            $('#emailList li:last').append(`<li>${data.name}</li>`)
-        }).fail(function (err) {
+                if (data === "Пользователь с данным email уже зарегистрирован") {
+                    alert(data);
+                } else {
+                    $('#emailList li:last').append(`<li>${data.name}</li>`)
+                }
+            }
+        ).fail(function (err) {
             console.log(err);
         });
     }
@@ -56,17 +61,18 @@
 <div class="container">
     <form>
         <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
                    placeholder="Enter email">
         </div>
         <button type="button" class="btn btn-primary" onclick="sendGreeting()">Submit</button>
     </form>
-    <br>
-    Почты:
-    <ul id="emailList">
-        <li></li>
-    </ul>
+    <div class="list-group" style="margin-top: 20px">
+        <label>Зарегистрированные почты:</label>
+        <ul id="emailList">
+            <li></li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>
