@@ -24,12 +24,13 @@ public class GreetingServlet extends HttpServlet {
         Email email = GSON.fromJson(req.getReader(), Email.class);
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
-        if (!emails.contains(email)) {
-            String json = GSON.toJson(email);
-            output.write(json.getBytes(StandardCharsets.UTF_8));
+        if (emails.contains(email)) {
+            email.setName(null);
         } else {
-            output.write("Пользователь с данным email уже зарегистрирован".getBytes(StandardCharsets.UTF_8));
+            emails.add(email);
         }
+        String json = GSON.toJson(email);
+        output.write(json.getBytes(StandardCharsets.UTF_8));
         output.flush();
         output.close();
     }

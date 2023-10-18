@@ -32,8 +32,8 @@
             }),
             dataType: 'json'
         }).done(function (data) {
-                if (data === "Пользователь с данным email уже зарегистрирован") {
-                    alert(data);
+                if (data.name === "undefined") {
+                    alert("Пользователь с данным email уже зарегистрирован");
                 } else {
                     $('#emailList li:last').append(`<li>${data.name}</li>`)
                 }
