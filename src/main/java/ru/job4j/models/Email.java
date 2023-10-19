@@ -9,4 +9,5 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class Email {
     private String name;
+    private String errorMessage;
 }

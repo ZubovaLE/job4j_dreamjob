@@ -25,7 +25,9 @@ public class GreetingServlet extends HttpServlet {
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         if (emails.contains(email)) {
-            email.setName(null);
+            email.setErrorMessage("error");
+        } else if (email.getName().equals("")) {
+            email.setErrorMessage("empty field");
         } else {
             emails.add(email);
         }

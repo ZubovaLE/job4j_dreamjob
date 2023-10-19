@@ -32,8 +32,10 @@
             }),
             dataType: 'json'
         }).done(function (data) {
-                if (data.name === "undefined") {
+                if (data.errorMessage === "error") {
                     alert("Пользователь с данным email уже зарегистрирован");
+                } else if (data.errorMessage === "empty field") {
+                    alert("Введите email");
                 } else {
                     $('#emailList li:last').append(`<li>${data.name}</li>`)
                 }
@@ -43,19 +45,19 @@
         });
     }
 
-    $(document).ready(function () {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/dreamjob/greet',
-            dataType: 'json'
-        }).done(function (data) {
-            for (var email of data) {
-                $('#emailList li:last').append(`<li>${email.name}</li>`)
-            }
-        }).fail(function (err) {
-            console.log(err);
-        });
-    });
+    // $(document).ready(function () {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: 'http://localhost:8080/dreamjob/greet',
+    //         dataType: 'json'
+    //     }).done(function (data) {
+    //         for (var email of data) {
+    //             $('#emailList li:last').append(`<li>${email.name}</li>`)
+    //         }
+    //     }).fail(function (err) {
+    //         console.log(err);
+    //     });
+    // });
 </script>
 <body>
 <div class="container">
