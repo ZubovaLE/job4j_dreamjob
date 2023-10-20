@@ -27,6 +27,17 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <title>Registration</title>
+
+    <script>
+        function validate(){
+            if($('input[type=text]:not([value=""])').length === 0) {
+                alert("Все поля должны быть заполнены");
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container pt-3">
@@ -45,7 +56,7 @@
                         <label>Пароль</label>
                         <input type="text" class="form-control" name="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Зарегистрироваться</button>
                 </form>
             </div>
         </div>
