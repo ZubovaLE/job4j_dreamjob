@@ -26,11 +26,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-    <title>Registration</title>
-
     <script>
-        function validate(){
-            if($('input[type=text]:not([value=""])').length === 0) {
+        function validate() {
+            if ($('input[type=text]:not([value=""])').length < 3) {
                 alert("Все поля должны быть заполнены");
                 return false;
             } else {
@@ -38,6 +36,8 @@
             }
         }
     </script>
+
+    <title>Registration</title>
 </head>
 <body>
 <div class="container pt-3">
@@ -56,7 +56,8 @@
                         <label>Пароль</label>
                         <input type="text" class="form-control" name="password">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="return validate();">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Зарегистрироваться
+                    </button>
                 </form>
             </div>
         </div>
