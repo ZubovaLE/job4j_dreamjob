@@ -1,5 +1,12 @@
 CREATE TABLE candidates (
     id SERIAL PRIMARY KEY,
-    lastName TEXT,
-    firstName TEXT,
+    lastName TEXT NOT NULL,
+    firstName TEXT NOT NULL,
+    middleName TEXT,
+    email TEXT,
+    phoneNumber TEXT,
+    age SMALLINT,
+    photo TEXT,
+    gender TEXT,
+    city_id INTEGER REFERENCES cities(id)
 );

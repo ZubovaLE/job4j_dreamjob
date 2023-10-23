@@ -14,7 +14,6 @@ public abstract class AbstractUser {
     private final String middleName;
     private String email;
     private final String phoneNumber;
-    private String password;
     private int age;
 
     public AbstractUser(final AbstractUserBuilder userBuilder) {
@@ -51,10 +50,6 @@ public abstract class AbstractUser {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", age=" + age +
                 '}';
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public abstract static class AbstractUserBuilder {

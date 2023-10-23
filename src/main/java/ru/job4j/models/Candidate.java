@@ -6,12 +6,13 @@ import lombok.Getter;
 public class Candidate extends AbstractUser {
     private String photo;
     private final Gender gender;
+    private int city_id;
 
     public Candidate(CandidateBuilder builder) {
         super(builder);
         photo = builder.photo;
         gender = builder.gender;
-        photo = "";
+        city_id = builder.city_id;
     }
 
     public void setPhoto(String photo) {
@@ -21,6 +22,7 @@ public class Candidate extends AbstractUser {
     public static class CandidateBuilder extends AbstractUserBuilder {
         private String photo;
         private Gender gender;
+        private int city_id;
 
         public CandidateBuilder(int id, String lastName, String firstName) {
             super(id, lastName, firstName);
@@ -33,6 +35,11 @@ public class Candidate extends AbstractUser {
 
         public CandidateBuilder withGender(Gender gender) {
             this.gender = gender;
+            return this;
+        }
+
+        public CandidateBuilder withCity_id(int city_id) {
+            this.city_id = city_id;
             return this;
         }
 

@@ -20,7 +20,18 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-
+    <script>
+        function validate(){
+            if($('input[type=text]:not([value=""])').length < 2) {
+                alert("Заполните все поля");
+                return false;
+            } else if($('input[name=gender]').length === 0) {
+                alert("Выберите пол");
+                return false;
+            }
+            return true;
+        }
+    </script>
     <title>Работа мечты</title>
 <body>
 <%
@@ -58,7 +69,7 @@
                         <%=candidate.getGender().toString()%><br>
                         <% } %>
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick=" return validate()">Сохранить</button>
                 </form>
             </div>
         </div>

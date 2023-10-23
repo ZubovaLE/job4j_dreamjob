@@ -20,7 +20,7 @@
             crossorigin="anonymous"></script>
     <script>
         function validate() {
-            if ($('input[name=text]:not([value=""])').length < 2) {
+            if ($('input[type=text]:not([value=""])').length < 2) {
                 alert("Заполните поля");
                 return false;
             } else {
