@@ -28,12 +28,12 @@
             crossorigin="anonymous"></script>
     <script>
         function validate() {
-            if ($('input[type=text]:not([value=""])').length < 3) {
+            let valid = true;
+            if ($('input[type=text]:not([value=""])').length === 0) {
                 alert("Все поля должны быть заполнены");
-                return false;
-            } else {
-                return true;
+                valid = false;
             }
+            return valid;
         }
     </script>
 
