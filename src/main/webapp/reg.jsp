@@ -28,12 +28,11 @@
             crossorigin="anonymous"></script>
     <script>
         function validate() {
-            let valid = true;
-            if ($('input[type=text]:not([value=""])').length === 0) {
+            if ($('#name').val() === '' || $('#email').val() === '' || $('#password').val() === '') {
                 alert("Все поля должны быть заполнены");
-                valid = false;
+                return false;
             }
-            return valid;
+            return true;
         }
     </script>
 
@@ -49,12 +48,12 @@
             <div class="card-body" style="background-color: lightblue">
                 <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
-                        <label>Имя</label>
-                        <input type="text" class="form-control" name="name">
-                        <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
-                        <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <label for="name">Имя</label>
+                        <input type="text" class="form-control" name="name" id="name">
+                        <label for="email">Почта</label>
+                        <input type="text" class="form-control" name="email" id="email">
+                        <label for="password">Пароль</label>
+                        <input type="password" class="form-control" name="password" id="password">
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate();">Зарегистрироваться
                     </button>

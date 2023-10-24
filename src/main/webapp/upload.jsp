@@ -20,6 +20,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+    <script>
+        function validate() {
+            if ($('#file').val() === '') {
+                alert("Выберите файл");
+                return false;
+            }
+            return true;
+        }
+    </script>
     <title>Registration</title>
 </head>
 <body>
@@ -39,8 +48,8 @@
             <div class="card-body" style="background-color: lightblue">
                 <form action="<%=request.getContextPath()%>/upload?id=<%=candidate.getId()%>" method="post"
                       enctype="multipart/form-data">
-                    <input type="file" class="form-group" name="file">
-                    <button type="submit" class="btn btn-primary">Добавить</button>
+                    <input type="file" class="form-group" name="file" id="file">
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Добавить</button>
                 </form>
             </div>
         </div>

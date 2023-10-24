@@ -21,11 +21,11 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <script>
-        function validate(){
-            if($('input[type=text]:not([value=""])').length < 2) {
-                alert("Заполните все поля");
+        function validate() {
+            if ($('#lastName').val() === '' || $('#firstName').val() === '') {
+                alert("Все поля должны быть заполнены");
                 return false;
-            } else if($('input[name=gender]').length === 0) {
+            } else if ($('input[name=gender]:checked').length === 0) {
                 alert("Выберите пол");
                 return false;
             }
@@ -54,10 +54,11 @@
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
-                        <label>Фамилия</label>
-                        <input type="text" class="form-control" name="lastName" value="<%=candidate.getLastName()%>">
-                        <label>Имя</label><br>
-                        <input type="text" class="form-control" name="firstName"
+                        <label for="lastName">Фамилия</label>
+                        <input type="text" class="form-control" name="lastName" id="lastName"
+                               value="<%=candidate.getLastName()%>">
+                        <label for="firstName">Имя</label><br>
+                        <input type="text" class="form-control" name="firstName" id="firstName"
                                value="<%=candidate.getFirstName()%>"><br>
                         <% if (candidate.getGender() == null) { %>
                         <label>Пол</label><br>
@@ -69,7 +70,7 @@
                         <%=candidate.getGender().toString()%><br>
                         <% } %>
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick=" return validate()">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                 </form>
             </div>
         </div>

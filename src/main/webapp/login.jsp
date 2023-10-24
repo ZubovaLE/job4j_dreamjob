@@ -20,12 +20,11 @@
             crossorigin="anonymous"></script>
     <script>
         function validate() {
-            if ($('input[type=text]:not([value=""])').length < 2) {
-                alert("Заполните поля");
+            if ($('#email').val() === '' || $('#password').val() === '') {
+                alert("Необходимо заполнить все поля");
                 return false;
-            } else {
-                return true;
             }
+            return true;
         }
     </script>
     <title>Authorization</title>
@@ -40,17 +39,17 @@
             <div class="card-body" style="background-color: lightblue">
                 <form action="<%=request.getContextPath()%>/auth.do" method="post">
                     <div class="form-group">
-                        <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
+                        <label for="email">Почта</label>
+                        <input type="email" class="form-control" name="email" id="email">
                     </div>
                     <div class="form-group">
-                        <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <label for="password">Пароль</label>
+                        <input type="password" class="form-control" name="password" id="password">
                     </div>
                     <table>
                         <tr>
                             <td>
-                                <button type="submit" class="btn btn-primary">Вход</button>
+                                <button type="submit" class="btn btn-primary" onclick="return validate();">Вход</button>
                             </td>
                             <td>
                                 <a class="nav-link" href="<%=request.getContextPath()%>/reg.do">Регистрация</a>
