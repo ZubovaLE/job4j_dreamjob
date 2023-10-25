@@ -131,7 +131,6 @@ public class UsqlStore implements Store<User> {
         return true;
     }
 
-    @Override
     public User findByEmail(String email) {
         try (Connection connection = pool.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE email = ?");

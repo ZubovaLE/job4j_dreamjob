@@ -9,8 +9,6 @@ public interface Store<E> {
 
     E findById(int id);
 
-    E findByEmail(String email);
-
     E findByName(String name);
 
     boolean delete(int id);

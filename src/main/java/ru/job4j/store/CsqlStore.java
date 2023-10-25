@@ -127,11 +127,6 @@ public class CsqlStore implements Store<Candidate> {
     }
 
     @Override
-    public Candidate findByEmail(String email) {
-        return null;
-    }
-
-    @Override
     public Candidate findByName(String name) {
         return null;
     }

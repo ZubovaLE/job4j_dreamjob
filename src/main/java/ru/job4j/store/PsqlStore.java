@@ -119,11 +119,6 @@ public class PsqlStore implements Store<Post> {
     }
 
     @Override
-    public Post findByEmail(String email) {
-        return null;
-    }
-
-    @Override
     public Post findByName(String name) {
         try (Connection cn = pool.getConnection()) {
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE name LIKE ?");
