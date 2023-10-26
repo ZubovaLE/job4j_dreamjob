@@ -51,7 +51,7 @@
                         <label for="name">Имя</label>
                         <input type="text" class="form-control" name="name" id="name">
                         <label for="email">Почта</label>
-                        <input type="text" class="form-control" name="email" id="email">
+                        <input type="email" class="form-control" name="email" id="email">
                         <label for="password">Пароль</label>
                         <input type="password" class="form-control" name="password" id="password">
                     </div>

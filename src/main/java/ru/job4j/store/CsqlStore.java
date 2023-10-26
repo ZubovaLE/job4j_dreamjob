@@ -127,11 +127,6 @@ public class CsqlStore implements Store<Candidate> {
     }
 
     @Override
-    public Candidate findByName(String name) {
-        return null;
-    }
-
-    @Override
     public boolean delete(int id) {
         try (Connection cn = pool.getConnection()) {
             PreparedStatement ps = cn.prepareStatement("DELETE FROM candidates  WHERE id = ?;");

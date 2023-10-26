@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="ru.job4j.models.Candidate" %>
 <%@ page import="ru.job4j.store.CsqlStore" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -31,6 +32,17 @@
             }
             return true;
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/dreamjob/cities',
+                dataType: 'json'
+            }).done(function (data) {
+                JSON.stringify(data);
+            })
+        })
     </script>
     <title>Работа мечты</title>
 <body>
@@ -69,6 +81,11 @@
                         <input type="radio" name="gender" value="<%=candidate.getGender().toString()%>" checked>
                         <%=candidate.getGender().toString()%><br>
                         <% } %>
+                        <select name="city">
+                            <c:forEach items="${data}" var="city">
+                                <option value="${data.name}"><c:out value="${post.name}"/></option>
+                            </c:forEach>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                 </form>
@@ -80,7 +97,7 @@
 <footer>
     <ul class="nav justify-content-center">
         <li class="nav-item">
-            <a href="<%=request.getContextPath()%>">На главную страницу</a>
+            <a href="<%=request.getContextPath()%>/index.do">На главную страницу</a>
         </li>
     </ul>
 </footer>

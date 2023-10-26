@@ -38,10 +38,10 @@ public class UsqlStore implements Store<User> {
     }
 
     private static final class Lazy {
-        private static final Store<User> INST = new UsqlStore();
+        private static final UsqlStore INST = new UsqlStore();
     }
 
-    public static Store<User> instOf() {
+    public static UsqlStore instOf() {
         return UsqlStore.Lazy.INST;
     }
 
@@ -144,11 +144,6 @@ public class UsqlStore implements Store<User> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
-    }
-
-    @Override
-    public User findByName(String name) {
         return null;
     }
 }

@@ -5,11 +5,9 @@ import java.util.Collection;
 public interface Store<E> {
     Collection<E> findAll();
 
-    void save(E e);
-
     E findById(int id);
 
-    E findByName(String name);
+    void save(E e);
 
     boolean delete(int id);
 }

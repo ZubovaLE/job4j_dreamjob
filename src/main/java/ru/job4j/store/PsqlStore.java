@@ -39,10 +39,10 @@ public class PsqlStore implements Store<Post> {
     }
 
     private static final class Lazy {
-        private static final Store<Post> INST = new PsqlStore();
+        private static final PsqlStore INST = new PsqlStore();
     }
 
-    public static Store<Post> instOf() {
+    public static PsqlStore instOf() {
         return Lazy.INST;
     }
 
@@ -118,7 +118,6 @@ public class PsqlStore implements Store<Post> {
         return null;
     }
 
-    @Override
     public Post findByName(String name) {
         try (Connection cn = pool.getConnection()) {
             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE name LIKE ?");

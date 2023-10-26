@@ -1,7 +1,6 @@
 package ru.job4j.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import ru.job4j.models.Candidate;
 import ru.job4j.models.City;
 
 import java.io.BufferedReader;
@@ -75,7 +74,7 @@ public class CityStore implements Store<City> {
     private City create(City city) {
         try (Connection cn = pool.getConnection()) {
             PreparedStatement ps = cn.prepareStatement("INSERT INTO cities(name) VALUES(?);",
-                    PreparedStatement.RETURN_GENERATED_KEYS)
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, city.getName());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
@@ -92,7 +91,7 @@ public class CityStore implements Store<City> {
 
     private void update(City city) {
         try (Connection cn = pool.getConnection()) {
-            PreparedStatement ps = cn.prepareStatement("UPDATE cities SET name = ? WHERE id = ?;")
+            PreparedStatement ps = cn.prepareStatement("UPDATE cities SET name = ? WHERE id = ?;");
             ps.setString(1, city.getName());
             ps.setInt(2, city.getId());
             ps.execute();
@@ -117,11 +116,6 @@ public class CityStore implements Store<City> {
                 Exception e) {
             e.printStackTrace();
         }
-        return null;
-    }
-
-    @Override
-    public City findByName(String name) {
         return null;
     }
 
