@@ -34,15 +34,20 @@
         }
     </script>
     <script>
-        $(document).ready(function () {
+        function getOptions() {
             $.ajax({
                 type: 'GET',
                 url: 'http://localhost:8080/dreamjob/cities',
                 dataType: 'json'
-            }).done(function (data) {
-                JSON.stringify(data);
-            })
-        })
+            }).success(function (data) {
+                let cities = $.parseJSON(data);
+                for (var c of cities) {
+                    $("#city").append('<option>' + ${c.name} +'</option>');
+                }
+            }).fail(function (err) {
+                console.log(err);
+            });
+        }
     </script>
     <title>Работа мечты</title>
 <body>
@@ -81,10 +86,9 @@
                         <input type="radio" name="gender" value="<%=candidate.getGender().toString()%>" checked>
                         <%=candidate.getGender().toString()%><br>
                         <% } %>
-                        <select name="city">
-                            <c:forEach items="${data}" var="city">
-                                <option value="${data.name}"><c:out value="${post.name}"/></option>
-                            </c:forEach>
+                        <label for="city">Место жительства</label>
+                        <select name="city" id="city" ondrop="getOptions();">
+                            <option></option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
@@ -94,11 +98,4 @@
     </div>
 </div>
 </body>
-<footer>
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a href="<%=request.getContextPath()%>/index.do">На главную страницу</a>
-        </li>
-    </ul>
-</footer>
 </html>
