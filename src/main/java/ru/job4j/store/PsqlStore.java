@@ -144,4 +144,14 @@ public class PsqlStore implements Store<Post> {
         }
         return true;
     }
+
+    public List<Post> findTodayPosts() {
+        List<Post> todayPosts = new ArrayList<>();
+        try (Connection cn = pool.getConnection()) {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return todayPosts;
+    }
 }
