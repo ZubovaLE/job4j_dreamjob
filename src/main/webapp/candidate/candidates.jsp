@@ -83,9 +83,10 @@
                                         <form action='<c:url value="/candidates.do"/>' method="post">
                                             <input type="hidden" class="form-control" name="id"
                                                    value="<c:out value="${candidate.id}"/>">
+                                            <input type="hidden" class="form-control" name="isDeleted"
+                                                   value="true">
                                             <button type="submit" class="btn btn-outline-danger"
-                                                    title="Удалить кандидата"><i
-                                                    class="bi bi-trash"></i></button>
+                                                    title="Удалить кандидата"><i class="bi bi-trash"></i></button>
                                         </form>
                                     </div>
                                 </td>
@@ -96,6 +97,10 @@
                                     <c:out value="${candidate.gender}"/>
                                 </td>
                                 <td>
+                                    <c:if test="${candidate.photo!=null}">
+                                        <img src="<c:url value='/download?photo=${candidate.photo}'/>" width="100px"
+                                             height="100px"/>
+                                    </c:if>
                                     <form action='<c:url value="/upload"/>' method="get">
                                         <input type="hidden" class="form-control" name="id"
                                                value="<c:out value="${candidate.id}"/>">

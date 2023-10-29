@@ -29,7 +29,7 @@
             return true;
         }
     </script>
-    <title>Registration</title>
+    <title>Photo uploading</title>
 </head>
 <body>
 <%

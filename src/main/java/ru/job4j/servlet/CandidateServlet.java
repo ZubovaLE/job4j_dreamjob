@@ -14,6 +14,7 @@ import java.io.IOException;
 public class CandidateServlet extends HttpServlet {
 
     private final Store<Candidate> store = CsqlStore.instOf();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("candidates", store.findAll());
@@ -25,14 +26,14 @@ public class CandidateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         int id = Integer.parseInt(req.getParameter("id"));
-        String lastName = req.getParameter("lastName");
-        if (lastName == null) {
+        boolean isDeleted = Boolean.parseBoolean(req.getParameter("isDeleted"));
+        if (isDeleted) {
             store.delete(id);
         } else {
             store.save(
                     new Candidate.CandidateBuilder(
                             id,
-                            lastName,
+                            req.getParameter("lastName"),
                             req.getParameter("firstName")
                     ).withGender(Gender.valueOf(req.getParameter("gender"))).build());
         }
