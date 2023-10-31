@@ -97,7 +97,7 @@
                                     <c:out value="${candidate.gender}"/>
                                 </td>
                                 <td>
-                                    <c:if test="${candidate.photo!=null}">
+                                    <c:if test="${not empty candidate.photo}">
                                         <img src="<c:url value='/download?photo=${candidate.photo}'/>" width="100px"
                                              height="100px"/>
                                     </c:if>

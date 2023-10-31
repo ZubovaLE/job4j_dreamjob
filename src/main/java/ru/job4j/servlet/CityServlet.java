@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Collection;
+import java.util.List;
 
 public class CityServlet extends HttpServlet {
     private static final Gson GSON = new GsonBuilder().create();
@@ -21,10 +20,8 @@ public class CityServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
-        Collection<City> cities = CityStore.instOf().findAll();
-        String json = GSON.toJson(cities);
-        output.write(json.getBytes(StandardCharsets.UTF_8));
-        output.flush();
-        output.close();
+        List<City> cities = (List<City>) CityStore.instOf().findAll();
+        String stringCities = cities.toString();
+        resp.getWriter().write(stringCities);
     }
 }

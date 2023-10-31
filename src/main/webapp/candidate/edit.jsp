@@ -34,20 +34,19 @@
         }
     </script>
     <script>
-        function getOptions() {
+        $(document).ready(function () {
             $.ajax({
                 type: 'GET',
                 url: 'http://localhost:8080/dreamjob/cities',
-                dataType: 'json'
-            }).success(function (data) {
-                let cities = $.parseJSON(data);
-                for (var c of cities) {
-                    $("#city").append('<option>' + ${c.name} +'</option>');
+                dataType: 'json',
+                success: function (data) {
+                    let cities = "";
+                    for (let i = 0; i < data.length; i++) {
+                        cities += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
+                    }
+                    $('#city').html(cities);
                 }
-            }).fail(function (err) {
-                console.log(err);
-            });
-        }
+            })
     </script>
     <title>Работа мечты</title>
 <body>
@@ -87,7 +86,7 @@
                         <%=candidate.getGender().toString()%><br>
                         <% } %>
                         <label for="city">Место жительства</label>
-                        <select name="city" id="city" ondrop="getOptions();">
+                        <select name="city" id="city">
                             <option></option>
                         </select>
                     </div>
