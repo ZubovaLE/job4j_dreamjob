@@ -79,16 +79,14 @@
                                         <i class="fa fa-edit fa-2x"></i>
                                     </a>
                                     <c:out value="${candidate.lastName}"/>
-                                    <div class="fa-2x">
-                                        <form action='<c:url value="/candidates.do"/>' method="post">
-                                            <input type="hidden" class="form-control" name="id"
-                                                   value="<c:out value="${candidate.id}"/>">
-                                            <input type="hidden" class="form-control" name="isDeleted"
-                                                   value="true">
-                                            <button type="submit" class="btn btn-outline-danger"
-                                                    title="Удалить кандидата"><i class="bi bi-trash"></i></button>
-                                        </form>
-                                    </div>
+                                    <form action='<c:url value="/candidates.do"/>' method="post">
+                                        <input type="hidden" class="form-control" name="id"
+                                               value="<c:out value="${candidate.id}"/>">
+                                        <input type="hidden" class="form-control" name="isDeleted"
+                                               value="true">
+                                        <button type="submit" class="btn-danger"
+                                                title="Удалить кандидата"><i class="bi bi-trash"></i></button>
+                                    </form>
                                 </td>
                                 <td>
                                     <c:out value="${candidate.firstName}"/>

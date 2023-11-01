@@ -148,7 +148,7 @@ public class PsqlStore implements Store<Post> {
     public List<Post> findTodayPosts() {
         List<Post> todayPosts = new ArrayList<>();
         try (Connection cn = pool.getConnection()) {
-
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM posts WHERE created ");
         } catch (Exception e) {
             e.printStackTrace();
         }

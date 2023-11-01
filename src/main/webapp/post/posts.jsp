@@ -15,6 +15,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
             crossorigin="anonymous"></script>
@@ -69,10 +70,18 @@
                         <c:forEach items="${posts}" var="post">
                             <tr>
                                 <td>
-                                    <a href='<c:url value="/post/edit.jsp?id=${post.id}"/>'>
-                                        <i class="fa fa-edit mr-3"></i>
+                                    <a href='<c:url value="/post/edit.jsp?id=${post.id}"/>' style="font-size: x-large">
+                                        <i class="fa fa-edit mr-2" title="редактировать"></i>
                                     </a>
                                     <c:out value="${post.name}"/>
+                                    <form action='<c:url value="/posts.do"/>' method="post">
+                                        <input type="hidden" class="form-control" name="id"
+                                               value="<c:out value="${post.id}"/>">
+                                        <input type="hidden" class="form-control" name="isDeleted" value="true">
+                                        <button type="submit" class="btn-danger" title="удалить">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
