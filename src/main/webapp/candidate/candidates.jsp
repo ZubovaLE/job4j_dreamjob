@@ -95,25 +95,28 @@
                                     <c:out value="${candidate.gender}"/>
                                 </td>
                                 <td>
-                                    <c:if test="${not empty candidate.photo}">
-                                        <img src="<c:url value='/download?photo=${candidate.photo}'/>" width="100px"
-                                             height="100px"/>
-                                    </c:if>
                                     <form action='<c:url value="/upload"/>' method="get">
                                         <input type="hidden" class="form-control" name="id"
                                                value="<c:out value="${candidate.id}"/>">
-                                        <button type="submit" class="btn btn-primary">Добавить</button>
+                                        <c:choose>
+                                            <c:when test="${not empty candidate.photo}">
+                                                <img src="<c:url value='/download?photo=${candidate.photo}'/>"
+                                                     width="100px" height="100px" alt="фото"/><br>
+                                                <button type="submit" class="btn btn-primary">Изменить</button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="submit" class="btn btn-primary">Добавить</button>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </form>
+                                    <c:if test="${not empty candidate.photo}">
                                     <form action="<c:url value='/upload'/>" method="post">
                                         <input type="hidden" class="form-control" name="id"
                                                value="<c:out value="${candidate.id}"/>">
-                                        <input type="hidden" class="form-control" name="lastName"
-                                               value="<c:out value="${candidate.lastName}"/>">
-                                        <input type="hidden" class="form-control" name="firstName"
-                                               value="<c:out value="${candidate.firstName}"/>">
                                         <input type="hidden" class="form-control" name="photo"
                                                value="<c:out value="${candidate.photo}"/>">
                                         <button type="submit" class="btn btn-primary">Удалить</button>
+                                        </c:if>
                                     </form>
                                 </td>
                             </tr>

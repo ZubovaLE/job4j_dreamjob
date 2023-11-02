@@ -93,7 +93,6 @@
             </div>
         </div>
     </div>
-    <button name="test!" onclick="validate()"></button>
 </div>
 </body>
 <footer>

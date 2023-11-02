@@ -22,6 +22,11 @@ public class PhotoUploadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         req.setAttribute("id", id);
+        String photo = req.getParameter("photo");
+        if (photo != null) {
+            File file = new File("c:\\images\\" + photo);
+            file.delete();
+        }
         req.getRequestDispatcher("upload.jsp").forward(req, resp);
     }
 
@@ -30,9 +35,8 @@ public class PhotoUploadServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         String photo = req.getParameter("photo");
         if (photo != null) {
-            String lastName = req.getParameter("lastName");
-            String firstName = req.getParameter("firstName");
-            Candidate candidate = new Candidate.CandidateBuilder(id, lastName, firstName).withPhoto(photo).build();
+            Candidate candidate = CsqlStore.instOf().findById(id);
+            candidate.setPhoto(null);
             CsqlStore.instOf().save(candidate);
             File file = new File("c:\\images\\" + photo);
             file.delete();
@@ -56,13 +60,14 @@ public class PhotoUploadServlet extends HttpServlet {
                         sb.append(File.separator);
                         sb.append(id);
                         sb.append(".");
-                        sb.append(item.getName().split("\\.")[1]);
+                        String format = item.getName().split("\\.")[1];
+                        sb.append(format);
                         File file = new File(sb.toString());
                         try (FileOutputStream out = new FileOutputStream(file)) {
                             out.write(item.getInputStream().readAllBytes());
                         }
-                        Candidate candidate = (Candidate) CsqlStore.instOf().findById(id);
-                        candidate.setPhoto(id + "." + item.getName().split("\\.")[1]);
+                        Candidate candidate = CsqlStore.instOf().findById(id);
+                        candidate.setPhoto(id + "." + format);
                         CsqlStore.instOf().save(candidate);
                     }
                 }

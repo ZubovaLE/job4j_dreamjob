@@ -56,7 +56,9 @@ public class CsqlStore implements Store<Candidate> {
                 while (it.next()) {
                     candidates.add(new Candidate.CandidateBuilder(it.getInt("id"),
                             it.getString("lastName"), it.getString("firstName"))
-                            .withGender(Gender.valueOf(it.getString("gender"))).build());
+                            .withPhoto(it.getString("photo"))
+                            .withGender(Gender.valueOf(it.getString("gender")))
+                            .build());
                 }
             }
         } catch (Exception e) {
@@ -76,12 +78,13 @@ public class CsqlStore implements Store<Candidate> {
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection()) {
-            PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName, gender) " +
-                            "VALUES (?, ?, ?)",
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName, gender, photo) " +
+                            "VALUES (?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, candidate.getLastName());
             ps.setString(2, candidate.getFirstName());
             ps.setString(3, candidate.getGender().toString());
+            ps.setString(4, candidate.getPhoto());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -96,11 +99,12 @@ public class CsqlStore implements Store<Candidate> {
 
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection()) {
-            PreparedStatement ps = cn.prepareStatement("UPDATE candidates SET lastName = ?, firstName = ? " +
+            PreparedStatement ps = cn.prepareStatement("UPDATE candidates SET lastName = ?, firstName = ?, photo = ? " +
                     "WHERE id = ?");
             ps.setString(1, candidate.getLastName());
             ps.setString(2, candidate.getFirstName());
-            ps.setInt(3, candidate.getId());
+            ps.setString(3, candidate.getPhoto());
+            ps.setInt(4, candidate.getId());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
