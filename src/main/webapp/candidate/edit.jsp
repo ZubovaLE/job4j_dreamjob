@@ -87,6 +87,9 @@
                         <label for="city">Место жительства</label>
                         <select name="city" id="city">
                         </select>
+                        <% if (candidate.getPhoto() != null) { %>
+                        <input type="hidden" name="photo" value="<%=candidate.getPhoto()%>">
+                        <% }%>
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                 </form>

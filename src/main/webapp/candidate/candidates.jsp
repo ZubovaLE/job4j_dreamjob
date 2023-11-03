@@ -27,7 +27,15 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .scale {
+            transition: 1s; /* Время эффекта */
+        }
 
+        .scale:hover {
+            transform: scale(2.2); /* Увеличиваем масштаб */
+        }
+    </style>
     <title>Работа мечты</title>
 </head>
 <body>
@@ -56,14 +64,15 @@
     </div>
     <div class="container pt-3">
         <div class="row">
-            <div class="card" style="width: 100%">
+            <div class="card" style="text-align: center; width: 100%">
                 <div class="card-header">
                     Кандидаты
                 </div>
-                <div class="card-body">
-                    <table class="table">
+                <div class="table-responsive">
+                    <table class="table table-striped">
                         <thead>
                         <tr>
+                            <th scope="col"></th>
                             <th scope="col">Фамилия</th>
                             <th scope="col">Имя</th>
                             <th scope="col">Пол</th>
@@ -73,20 +82,23 @@
                         <tbody>
                         <c:forEach items="${candidates}" var="candidate">
                             <tr>
-                                <td>
+                                <th style="text-align: end; width: 1%" scope="row">
                                     <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'
                                        title="Редактировать кандидата">
                                         <i class="fa fa-edit fa-2x"></i>
                                     </a>
-                                    <c:out value="${candidate.lastName}"/>
                                     <form action='<c:url value="/candidates.do"/>' method="post">
                                         <input type="hidden" class="form-control" name="id"
                                                value="<c:out value="${candidate.id}"/>">
-                                        <input type="hidden" class="form-control" name="isDeleted"
-                                               value="true">
+                                        <input type="hidden" class="form-control" name="id"
+                                               value="<c:out value="${candidate.photo}"/>">
+                                        <input type="hidden" class="form-control" name="isDeleted" value="true">
                                         <button type="submit" class="btn-danger"
                                                 title="Удалить кандидата"><i class="bi bi-trash"></i></button>
                                     </form>
+                                </th>
+                                <td>
+                                    <c:out value="${candidate.lastName}"/>
                                 </td>
                                 <td>
                                     <c:out value="${candidate.firstName}"/>
@@ -101,7 +113,9 @@
                                         <c:choose>
                                             <c:when test="${not empty candidate.photo}">
                                                 <img src="<c:url value='/download?photo=${candidate.photo}'/>"
-                                                     width="100px" height="100px" alt="фото"/><br>
+                                                     width="100px" height="100px" alt="фото" class="scale"/><br>
+                                                <input type="hidden" class="form-control" name="photo"
+                                                       value="<c:out value="${candidate.photo}"/>">
                                                 <button type="submit" class="btn btn-primary">Изменить</button>
                                             </c:when>
                                             <c:otherwise>

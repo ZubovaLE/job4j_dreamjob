@@ -63,17 +63,17 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th scope="col"></th>
                             <th scope="col">Названия</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach items="${posts}" var="post">
                             <tr>
-                                <td>
+                                <td style="text-align: end; width: 1%">
                                     <a href='<c:url value="/post/edit.jsp?id=${post.id}"/>' style="font-size: x-large">
                                         <i class="fa fa-edit mr-2" title="редактировать"></i>
                                     </a>
-                                    <c:out value="${post.name}"/>
                                     <form action='<c:url value="/posts.do"/>' method="post">
                                         <input type="hidden" class="form-control" name="id"
                                                value="<c:out value="${post.id}"/>">
@@ -82,6 +82,9 @@
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
+                                </td>
+                                <td>
+                                    <c:out value="${post.name}"/>
                                 </td>
                             </tr>
                         </c:forEach>

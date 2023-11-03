@@ -22,11 +22,6 @@ public class PhotoUploadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         req.setAttribute("id", id);
-        String photo = req.getParameter("photo");
-        if (photo != null) {
-            File file = new File("c:\\images\\" + photo);
-            file.delete();
-        }
         req.getRequestDispatcher("upload.jsp").forward(req, resp);
     }
 

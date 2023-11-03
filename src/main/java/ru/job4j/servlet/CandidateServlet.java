@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 
 public class CandidateServlet extends HttpServlet {
@@ -26,16 +27,21 @@ public class CandidateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         int id = Integer.parseInt(req.getParameter("id"));
+        String photo = req.getParameter("photo");
         boolean isDeleted = Boolean.parseBoolean(req.getParameter("isDeleted"));
         if (isDeleted) {
+            boolean wasDeleted = photo != null && new File("c:\\images\\" + photo).delete();
             store.delete(id);
         } else {
-            store.save(
-                    new Candidate.CandidateBuilder(
-                            id,
-                            req.getParameter("lastName"),
-                            req.getParameter("firstName")
-                    ).withGender(Gender.valueOf(req.getParameter("gender"))).build());
+            Candidate candidate = new Candidate.CandidateBuilder(
+                    id,
+                    req.getParameter("lastName"),
+                    req.getParameter("firstName")
+            ).withGender(Gender.valueOf(req.getParameter("gender"))).build();
+            if (photo != null) {
+                candidate.setPhoto(photo);
+            }
+            store.save(candidate);
         }
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }

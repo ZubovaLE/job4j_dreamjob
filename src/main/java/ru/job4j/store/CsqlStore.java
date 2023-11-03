@@ -120,6 +120,7 @@ public class CsqlStore implements Store<Candidate> {
                 if (it.next()) {
                     return new Candidate.CandidateBuilder(it.getInt("id"), it.getString("lastName"),
                             it.getString("firstName"))
+                            .withPhoto(it.getString("photo"))
                             .withGender(Gender.valueOf(it.getString("gender")))
                             .build();
                 }
