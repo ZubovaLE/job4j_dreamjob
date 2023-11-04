@@ -59,11 +59,11 @@
 <div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
-            <div class="card-header">
+            <div class="card-header" style="text-align: center">
                 <% if (id == null) { %>
-                Новый кандидат.
+                Новый кандидат
                 <% } else { %>
-                Редактирование кандидата.
+                Редактирование кандидата
                 <% } %>
             </div>
             <div class="card-body">
