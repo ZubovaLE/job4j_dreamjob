@@ -1,5 +1,6 @@
-CREATE TABLE post (
+CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    created TIMESTAMP
+    description TEXT,
+    created TIMESTAMPTZ
 );

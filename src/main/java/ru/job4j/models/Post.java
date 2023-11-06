@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -14,11 +14,12 @@ public class Post {
     private int id;
     private String name;
     private String description;
-    private LocalDate created;
+    private LocalDateTime created;
 
-    public Post(int id, String name) {
+    public Post(int id, String name, LocalDateTime created) {
         this.id = id;
         this.name = name;
+        this.created = created;
     }
 
     @Override

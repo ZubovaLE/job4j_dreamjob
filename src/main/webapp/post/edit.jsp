@@ -35,7 +35,7 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Post post = new Post(0, "");
+    Post post = new Post(0, "", "", null);
     if (id != null) {
         post = PsqlStore.instOf().findById(Integer.parseInt(id));
     }
@@ -43,11 +43,11 @@
 <div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
-            <div class="card-header">
+            <div class="card-header" style="text-align: center">
                 <% if (id == null) { %>
-                Новая вакансия.
+                Новая вакансия
                 <% } else { %>
-                Редактирование вакансии.
+                Редактирование вакансии
                 <% } %>
             </div>
             <div class="card-body">
@@ -55,6 +55,12 @@
                     <div class="form-group">
                         <label for="name">Имя</label>
                         <input type="text" class="form-control" name="name" id="name" value="<%=post.getName()%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание</label>
+                        <textarea class="form-control" name="description" rows="5" id="description"
+                                  title="Опишите ключевые требования вакансии"><%=post.getDescription()%></textarea>
+                        <small class="form-text text-muted">Опишите требования к кандидату и условия работы</small>
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate()">Сохранить</button>
                 </form>

@@ -4,6 +4,7 @@ import ru.job4j.models.Candidate;
 import ru.job4j.models.Gender;
 import ru.job4j.models.Post;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,9 +21,9 @@ public class MemStore {
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
 
     private MemStore() {
-        posts.put(1, new Post(1, "Junior Java Job"));
-        posts.put(2, new Post(2, "Middle Java Job"));
-        posts.put(3, new Post(3, "Senior Java Job"));
+        posts.put(1, new Post(1, "Junior Java Job", LocalDateTime.now()));
+        posts.put(2, new Post(2, "Middle Java Job", LocalDateTime.now().plusMonths(1)));
+        posts.put(3, new Post(3, "Senior Java Job", LocalDateTime.now().plusMonths(2)));
         candidates.put(1, new Candidate.CandidateBuilder(1, "Depp", "Max")
                 .withGender(Gender.MALE)
                 .build());

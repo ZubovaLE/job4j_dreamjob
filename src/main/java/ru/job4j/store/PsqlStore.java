@@ -50,11 +50,12 @@ public class PsqlStore implements Store<Post> {
     public Collection<Post> findAll() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM posts")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    posts.add(new Post(it.getInt("id"), it.getString("name")));
+                    posts.add(new Post(it.getInt("id"), it.getString("name"),
+                            it.getTimestamp("created").toLocalDateTime()));
                 }
             }
         } catch (Exception e) {
@@ -74,10 +75,11 @@ public class PsqlStore implements Store<Post> {
 
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO posts(name, created) VALUES (?,?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
+            ps.setTimestamp(2, Timestamp.valueOf(post.getCreated()));
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -92,7 +94,7 @@ public class PsqlStore implements Store<Post> {
 
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?")) {
+             PreparedStatement ps = cn.prepareStatement("UPDATE posts SET name = ? WHERE id = ?")) {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
             ps.execute();
@@ -104,12 +106,13 @@ public class PsqlStore implements Store<Post> {
     @Override
     public Post findById(int id) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id = ?")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM posts WHERE id = ?")
         ) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new Post(it.getInt("id"), it.getString("name"));
+                    return new Post(it.getInt("id"), it.getString("name"),
+                            it.getTimestamp("created").toLocalDateTime());
                 }
             }
         } catch (Exception e) {
@@ -120,11 +123,12 @@ public class PsqlStore implements Store<Post> {
 
     public Post findByName(String name) {
         try (Connection cn = pool.getConnection()) {
-            PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE name LIKE ?");
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM posts WHERE name LIKE ?");
             ps.setString(1, name);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Post(rs.getInt("id"), rs.getString("name"));
+                    return new Post(rs.getInt("id"), rs.getString("name"),
+                            rs.getTimestamp("created").toLocalDateTime());
                 }
             }
         } catch (Exception e) {
@@ -136,7 +140,7 @@ public class PsqlStore implements Store<Post> {
     @Override
     public boolean delete(int id) {
         try (Connection conn = this.pool.getConnection();
-             PreparedStatement st = conn.prepareStatement("DELETE FROM post WHERE id = ?;")) {
+             PreparedStatement st = conn.prepareStatement("DELETE FROM posts WHERE id = ?;")) {
             st.setInt(1, id);
             st.executeUpdate();
         } catch (Exception e) {

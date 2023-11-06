@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class PostServlet extends HttpServlet {
 
@@ -31,7 +32,8 @@ public class PostServlet extends HttpServlet {
             store.save(
                     new Post(
                             Integer.parseInt(req.getParameter("id")),
-                            req.getParameter("name")
+                            req.getParameter("name"),
+                            LocalDateTime.now()
                     )
             );
         }
