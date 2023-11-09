@@ -30,7 +30,7 @@ public class CandidateServlet extends HttpServlet {
         String photo = req.getParameter("photo");
         boolean isDeleted = Boolean.parseBoolean(req.getParameter("isDeleted"));
         if (isDeleted) {
-            boolean wasDeleted = photo != null && new File("c:\\images\\" + photo).delete();
+            isDeleted = photo != null && new File("c:\\images\\" + photo).delete();
             store.delete(id);
         } else {
             Candidate candidate = new Candidate.CandidateBuilder(

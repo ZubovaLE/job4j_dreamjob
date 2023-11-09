@@ -90,7 +90,7 @@
                                     <form action='<c:url value="/candidates.do"/>' method="post">
                                         <input type="hidden" class="form-control" name="id"
                                                value="<c:out value="${candidate.id}"/>">
-                                        <input type="hidden" class="form-control" name="id"
+                                        <input type="hidden" class="form-control" name="photo"
                                                value="<c:out value="${candidate.photo}"/>">
                                         <input type="hidden" class="form-control" name="isDeleted" value="true">
                                         <button type="submit" class="btn-danger"

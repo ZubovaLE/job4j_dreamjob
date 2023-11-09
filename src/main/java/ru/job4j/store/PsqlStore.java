@@ -75,11 +75,12 @@ public class PsqlStore implements Store<Post> {
 
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO posts(name, created) VALUES (?,?)",
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO posts(name, description, created) VALUES (?,?,?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
-            ps.setTimestamp(2, Timestamp.valueOf(post.getCreated()));
+            ps.setString(2, post.getDescription());
+            ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {

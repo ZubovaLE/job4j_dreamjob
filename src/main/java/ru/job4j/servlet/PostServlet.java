@@ -33,6 +33,7 @@ public class PostServlet extends HttpServlet {
                     new Post(
                             Integer.parseInt(req.getParameter("id")),
                             req.getParameter("name"),
+                            req.getParameter("description"),
                             LocalDateTime.now()
                     )
             );
