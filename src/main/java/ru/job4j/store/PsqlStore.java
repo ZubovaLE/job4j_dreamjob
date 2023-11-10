@@ -55,6 +55,7 @@ public class PsqlStore implements Store<Post> {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
                     posts.add(new Post(it.getInt("id"), it.getString("name"),
+                            it.getString("description"),
                             it.getTimestamp("created").toLocalDateTime()));
                 }
             }
@@ -95,9 +96,10 @@ public class PsqlStore implements Store<Post> {
 
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE posts SET name = ? WHERE id = ?")) {
+             PreparedStatement ps = cn.prepareStatement("UPDATE posts SET name = ?, description = ? WHERE id = ?")) {
             ps.setString(1, post.getName());
-            ps.setInt(2, post.getId());
+            ps.setString(2, post.getDescription());
+            ps.setInt(3, post.getId());
             ps.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,6 +115,7 @@ public class PsqlStore implements Store<Post> {
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     return new Post(it.getInt("id"), it.getString("name"),
+                            it.getString("description"),
                             it.getTimestamp("created").toLocalDateTime());
                 }
             }

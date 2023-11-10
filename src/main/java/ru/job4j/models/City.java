@@ -10,6 +10,9 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 public class City {
+    private int id;
+    private String name;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -22,7 +25,4 @@ public class City {
     public int hashCode() {
         return Objects.hash(id);
     }
-
-    private int id;
-    private String name;
 }
