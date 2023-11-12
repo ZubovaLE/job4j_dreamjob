@@ -156,7 +156,14 @@ public class PsqlStore implements Store<Post> {
     public List<Post> findTodayPosts() {
         List<Post> todayPosts = new ArrayList<>();
         try (Connection cn = pool.getConnection()) {
-            PreparedStatement ps = cn.prepareStatement("SELECT * FROM posts WHERE created ");
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM posts WHERE created >= date_trunc('DAY', current_date)");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    todayPosts.add(new Post(rs.getInt("id"), rs.getString("name"),
+                            rs.getString("description"),
+                            rs.getTimestamp("created").toLocalDateTime()));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
