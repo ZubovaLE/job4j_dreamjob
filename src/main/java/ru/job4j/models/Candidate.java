@@ -2,14 +2,18 @@ package ru.job4j.models;
 
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class Candidate extends AbstractUser {
+    private LocalDateTime created;
     private String photo;
     private final Gender gender;
     private int city_id;
 
     public Candidate(CandidateBuilder builder) {
         super(builder);
+        created = builder.created;
         photo = builder.photo;
         gender = builder.gender;
         city_id = builder.city_id;
@@ -20,12 +24,14 @@ public class Candidate extends AbstractUser {
     }
 
     public static class CandidateBuilder extends AbstractUserBuilder {
+        private LocalDateTime created;
         private String photo;
         private Gender gender;
         private int city_id;
 
-        public CandidateBuilder(int id, String lastName, String firstName) {
+        public CandidateBuilder(int id, String lastName, String firstName, LocalDateTime created) {
             super(id, lastName, firstName);
+            this.created = created;
         }
 
         public CandidateBuilder withPhoto(String photo) {

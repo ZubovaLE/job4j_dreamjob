@@ -60,7 +60,7 @@
                 Сегодняшние вакансии
             </div>
             <div class="card-body">
-                <table class="table t">
+                <table class="table">
                     <thead>
                     <th scope="col">Название</th>
                     <th scope="col">Описание</th>
@@ -83,6 +83,20 @@
                 Сегодняшние кандидаты
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Имя</th>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${todayCandidates}" var="todayCandidate">
+                        <tr>
+                            <td><c:out value="${todayCandidate.lastName}"/></td>
+                            <td><c:out value="${todayCandidate.firstName}"/></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

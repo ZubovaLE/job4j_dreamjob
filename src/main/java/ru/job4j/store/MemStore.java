@@ -24,13 +24,16 @@ public class MemStore {
         posts.put(1, new Post(1, "Junior Java Job", LocalDateTime.now()));
         posts.put(2, new Post(2, "Middle Java Job", LocalDateTime.now().plusMonths(1)));
         posts.put(3, new Post(3, "Senior Java Job", LocalDateTime.now().plusMonths(2)));
-        candidates.put(1, new Candidate.CandidateBuilder(1, "Depp", "Max")
+        candidates.put(1, new Candidate.CandidateBuilder(1, "Depp", "Max",
+                LocalDateTime.of(2010, 8, 1, 1, 1))
                 .withGender(Gender.MALE)
                 .build());
-        candidates.put(2, new Candidate.CandidateBuilder(2, "Green", "Anna")
+        candidates.put(2, new Candidate.CandidateBuilder(2, "Green", "Anna",
+                LocalDateTime.of(2010, 8, 1, 1, 2))
                 .withGender(Gender.FEMALE)
                 .build());
-        candidates.put(3, new Candidate.CandidateBuilder(3, "Marlow", "Java")
+        candidates.put(3, new Candidate.CandidateBuilder(3, "Marlow", "Java",
+                LocalDateTime.of(2010, 8, 1, 1, 3))
                 .withGender(Gender.MALE)
                 .build());
     }

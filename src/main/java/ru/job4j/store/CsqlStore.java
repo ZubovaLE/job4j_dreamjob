@@ -40,10 +40,10 @@ public class CsqlStore implements Store<Candidate> {
     }
 
     private static final class Lazy {
-        private static final Store<Candidate> INST = new CsqlStore();
+        private static final CsqlStore INST = new CsqlStore();
     }
 
-    public static Store<Candidate> instOf() {
+    public static CsqlStore instOf() {
         return CsqlStore.Lazy.INST;
     }
 
@@ -53,13 +53,7 @@ public class CsqlStore implements Store<Candidate> {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates")) {
             try (ResultSet it = ps.executeQuery()) {
-                while (it.next()) {
-                    candidates.add(new Candidate.CandidateBuilder(it.getInt("id"),
-                            it.getString("lastName"), it.getString("firstName"))
-                            .withPhoto(it.getString("photo"))
-                            .withGender(Gender.valueOf(it.getString("gender")))
-                            .build());
-                }
+                collectCandidates(candidates, it);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,13 +72,14 @@ public class CsqlStore implements Store<Candidate> {
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection()) {
-            PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName, gender, photo) " +
-                            "VALUES (?, ?, ?, ?)",
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(lastName, firstName, created, gender, photo) " +
+                            "VALUES (?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, candidate.getLastName());
             ps.setString(2, candidate.getFirstName());
-            ps.setString(3, candidate.getGender().toString());
-            ps.setString(4, candidate.getPhoto());
+            ps.setTimestamp(3, Timestamp.valueOf(candidate.getCreated()));
+            ps.setString(4, candidate.getGender().toString());
+            ps.setString(5, candidate.getPhoto());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -119,7 +114,7 @@ public class CsqlStore implements Store<Candidate> {
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     return new Candidate.CandidateBuilder(it.getInt("id"), it.getString("lastName"),
-                            it.getString("firstName"))
+                            it.getString("firstName"), it.getTimestamp("created").toLocalDateTime())
                             .withPhoto(it.getString("photo"))
                             .withGender(Gender.valueOf(it.getString("gender")))
                             .build();
@@ -141,5 +136,29 @@ public class CsqlStore implements Store<Candidate> {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public List<Candidate> findTodayCandidates() {
+        List<Candidate> todayCandidates = new ArrayList<>();
+        try (Connection cn = pool.getConnection()) {
+            PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates WHERE created >= date_trunc('DAY', current_date)");
+            try (ResultSet rs = ps.executeQuery()) {
+                collectCandidates(todayCandidates, rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return todayCandidates;
+    }
+
+    private void collectCandidates(List<Candidate> todayCandidates, ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            todayCandidates.add(new Candidate.CandidateBuilder(rs.getInt("id"),
+                    rs.getString("lastName"), rs.getString("firstName"),
+                    rs.getTimestamp("created").toLocalDateTime())
+                    .withPhoto(rs.getString("photo"))
+                    .withGender(Gender.valueOf(rs.getString("gender")))
+                    .build());
+        }
     }
 }

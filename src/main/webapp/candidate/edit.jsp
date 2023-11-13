@@ -51,7 +51,7 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate.CandidateBuilder(0, "", "").build();
+    Candidate candidate = new Candidate.CandidateBuilder(0, "", "", null).build();
     if (id != null) {
         candidate = CsqlStore.instOf().findById(Integer.parseInt(id));
     }

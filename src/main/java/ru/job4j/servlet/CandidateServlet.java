@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class CandidateServlet extends HttpServlet {
 
@@ -36,7 +37,8 @@ public class CandidateServlet extends HttpServlet {
             Candidate candidate = new Candidate.CandidateBuilder(
                     id,
                     req.getParameter("lastName"),
-                    req.getParameter("firstName")
+                    req.getParameter("firstName"),
+                    LocalDateTime.now()
             ).withGender(Gender.valueOf(req.getParameter("gender"))).build();
             if (photo != null) {
                 candidate.setPhoto(photo);
